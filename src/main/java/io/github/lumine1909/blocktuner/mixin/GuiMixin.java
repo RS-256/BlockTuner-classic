@@ -1,5 +1,6 @@
 /*
  *     Copyright (c) 2022, xwjcool.
+ *     Copyright (c) 2025, Lumine1909.
  *
  *     This program is free software: you can redistribute it and/or modify
  *     it under the terms of the GNU Lesser General Public License as published by
@@ -15,26 +16,24 @@
  *     along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package cool.xwj.blocktuner.mixin;
+package io.github.lumine1909.blocktuner.mixin;
 
 import com.mojang.blaze3d.systems.RenderSystem;
-import cool.xwj.blocktuner.NoteNameHud;
-import net.minecraft.client.MinecraftClient;
-import net.minecraft.client.gui.DrawContext;
-import net.minecraft.client.gui.hud.InGameHud;
-import net.minecraft.client.render.item.ItemRenderer;
+import io.github.lumine1909.blocktuner.display.NoteNameHud;
+import net.minecraft.client.DeltaTracker;
+import net.minecraft.client.gui.Gui;
+import net.minecraft.client.gui.GuiGraphics;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
-@Mixin(InGameHud.class)
-public class InGameHudMixin {
-
+@Mixin(Gui.class)
+public class GuiMixin {
 
     @Inject(method = "render", at = @At("TAIL"))
-    private void renderNoteNameHud(DrawContext context, float tickDelta, CallbackInfo ci) {
-        NoteNameHud.render(context);
+    private void renderNoteNameHud(GuiGraphics guiGraphics, DeltaTracker deltaTracker, CallbackInfo ci) {
+        NoteNameHud.render(guiGraphics);
         RenderSystem.setShaderColor(1.0f, 1.0f, 1.0f, 1.0f);
     }
 }

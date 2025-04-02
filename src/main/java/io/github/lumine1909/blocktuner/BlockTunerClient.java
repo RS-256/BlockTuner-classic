@@ -1,5 +1,6 @@
 /*
  *     Copyright (c) 2021, xwjcool.
+ *     Copyright (c) 2025, Lumine1909.
  *
  *     This program is free software: you can redistribute it and/or modify
  *     it under the terms of the GNU Lesser General Public License as published by
@@ -15,20 +16,22 @@
  *     along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package cool.xwj.blocktuner;
+package io.github.lumine1909.blocktuner;
 
+import io.github.lumine1909.blocktuner.display.TuningScreen;
+import io.github.lumine1909.blocktuner.network.ClientBoundHelloPacket;
+import io.github.lumine1909.blocktuner.util.MidiManager;
 import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.fabricmc.fabric.api.client.networking.v1.ClientPlayConnectionEvents;
 import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
 import net.fabricmc.fabric.api.event.player.UseBlockCallback;
-import net.minecraft.block.Blocks;
-import net.minecraft.client.MinecraftClient;
-import net.minecraft.client.gui.screen.Screen;
-import net.minecraft.item.Items;
-import net.minecraft.text.Text;
-import net.minecraft.util.ActionResult;
+import net.minecraft.client.Minecraft;
+import net.minecraft.network.chat.Component;
+import net.minecraft.world.InteractionResult;
+import net.minecraft.world.item.Items;
+import net.minecraft.world.level.block.Blocks;
 
 @Environment(EnvType.CLIENT)
 public class BlockTunerClient implements ClientModInitializer {
@@ -39,20 +42,20 @@ public class BlockTunerClient implements ClientModInitializer {
         MidiManager.getMidiManager().refreshMidiDevice();
         UseBlockCallback.EVENT.register((player, world, hand, hitResult) -> {
             if (BlockTunerConfig.onBlockTunerServer
-                    && Screen.hasControlDown()
-                    && !player.isSpectator()
-                    && !player.isSneaking()
-                    && world.getBlockState(hitResult.getBlockPos()).getBlock() == Blocks.NOTE_BLOCK
-                    && player.getMainHandStack().getItem() != Items.BLAZE_ROD) {
-                MinecraftClient client = MinecraftClient.getInstance();
-                client.execute(() -> client.setScreen(new TuningScreen(Text.empty(), hitResult.getBlockPos())));
-                return ActionResult.FAIL;
+                && net.minecraft.client.gui.screens.Screen.hasControlDown()
+                && !player.isSpectator()
+                && !player.isShiftKeyDown()
+                && world.getBlockState(hitResult.getBlockPos()).getBlock() == Blocks.NOTE_BLOCK
+                && player.getMainHandItem().getItem() != Items.BLAZE_ROD) {
+                Minecraft client = Minecraft.getInstance();
+                client.execute(() -> client.setScreen(new TuningScreen(Component.empty(), hitResult.getBlockPos())));
+                return InteractionResult.FAIL;
             }
-            return ActionResult.PASS;
+            return InteractionResult.PASS;
         });
 
         // knowing a BlockTuner server
-        ClientPlayNetworking.registerGlobalReceiver(ProtocolCheckS2CPacket.ID, ProtocolCheckS2CPacket::receive);
+        ClientPlayNetworking.registerGlobalReceiver(ClientBoundHelloPacket.TYPE, ClientBoundHelloPacket::receive);
         ClientPlayConnectionEvents.DISCONNECT.register((handler, client) -> BlockTunerConfig.onBlockTunerServer = false);
     }
 }

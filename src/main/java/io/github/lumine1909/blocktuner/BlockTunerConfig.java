@@ -1,5 +1,6 @@
 /*
  *     Copyright (c) 2022, xwjcool.
+ *     Copyright (c) 2025, Lumine1909.
  *
  *     This program is free software: you can redistribute it and/or modify
  *     it under the terms of the GNU Lesser General Public License as published by
@@ -15,7 +16,7 @@
  *     along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package cool.xwj.blocktuner;
+package io.github.lumine1909.blocktuner;
 
 import net.fabricmc.loader.api.FabricLoader;
 
@@ -31,7 +32,7 @@ public class BlockTunerConfig {
     private static final Path CONFIG_PATH = FabricLoader.getInstance().getConfigDir().resolve("blocktuner.properties");
     private static final Properties properties = new Properties();
 
-    // configurables
+    // configurable
     private static final String PLAY_MODE = "play-mode";
     private static final String KEY_TO_PIANO = "key-to-piano";
     private static final String MIDI_DEVICE = "midi-device";
@@ -39,10 +40,10 @@ public class BlockTunerConfig {
     private static String midiDeviceName = "";
     private static boolean keyToPiano = false;
     private static boolean playMode = false;
-    static int keySignature = 0;
-    static boolean onBlockTunerServer = false;
+    public static int keySignature = 0;
+    public static boolean onBlockTunerServer = false;
 
-    public static void save(){
+    public static void save() {
 
         if (!Files.exists(CONFIG_PATH)) {
             try {
@@ -60,16 +61,12 @@ public class BlockTunerConfig {
         }
     }
 
-    public static void load(){
-
+    public static void load() {
         if (!Files.exists(CONFIG_PATH)) {
             save();
         }
-
         try (InputStream inputStream = Files.newInputStream(CONFIG_PATH)) {
             properties.load(inputStream);
-
-            //
             playMode = Boolean.parseBoolean(properties.getProperty(PLAY_MODE));
             keyToPiano = Boolean.parseBoolean(properties.getProperty(KEY_TO_PIANO));
             midiDeviceName = properties.getProperty(MIDI_DEVICE, "");
@@ -117,12 +114,12 @@ public class BlockTunerConfig {
     }
 
     public static void setKeySignature(int keySignature) {
-        if (keySignature >= -7 && keySignature <= 7){
+        if (keySignature >= -7 && keySignature <= 7) {
             BlockTunerConfig.keySignature = keySignature;
         } else {
             BlockTunerConfig.keySignature = 0;
         }
-        properties.setProperty(KEY_SIGNATURE,String.valueOf(BlockTunerConfig.keySignature));
+        properties.setProperty(KEY_SIGNATURE, String.valueOf(BlockTunerConfig.keySignature));
     }
 
     public static void keyAddSharp() {

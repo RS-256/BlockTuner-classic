@@ -6,11 +6,11 @@
   "name": "BlockTuner",
   "description": "A mod which helps you tune note blocks.",
   "authors": [
-    "xwjcool"
+    "xwjcool",
+    "Lumine1909"
   ],
   "contact": {
-    "homepage": "https://xwj.cool/",
-    "sources": "https://github.com/xwjcool123/BlockTunerMod"
+    "sources": "https://github.com/Lumine1909/BlockTunerMod_Continue"
   },
 
   "license": "LGPLv3",
@@ -19,10 +19,10 @@
   "environment": "*",
   "entrypoints": {
     "main": [
-      "cool.xwj.blocktuner.BlockTuner"
+      "io.github.lumine1909.blocktuner.BlockTuner"
     ],
     "client": [
-      "cool.xwj.blocktuner.BlockTunerClient"
+      "io.github.lumine1909.blocktuner.BlockTunerClient"
     ]
   },
   "mixins": [
@@ -33,7 +33,7 @@
   "depends": {
     "fabricloader": ">=0.14.21",
     "fabric": "*",
-    "minecraft": "1.20.*"
+    "minecraft": ">=1.21.4"
   },
   "conflicts": {
     "noteduplicator": "*",

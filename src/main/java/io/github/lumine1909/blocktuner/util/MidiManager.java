@@ -1,5 +1,6 @@
 /*
  *     Copyright (c) 2023, xwjcool.
+ *     Copyright (c) 2025, Lumine1909.
  *
  *     This program is free software: you can redistribute it and/or modify
  *     it under the terms of the GNU Lesser General Public License as published by
@@ -15,8 +16,9 @@
  *     along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package cool.xwj.blocktuner;
+package io.github.lumine1909.blocktuner.util;
 
+import io.github.lumine1909.blocktuner.BlockTunerConfig;
 import org.jetbrains.annotations.Nullable;
 
 import javax.sound.midi.MidiDevice;
@@ -26,11 +28,13 @@ import java.util.Objects;
 import java.util.Vector;
 
 public class MidiManager {
+
     private static final MidiManager midiManager = new MidiManager();
-    public static final Vector<MidiDevice> transmitters = new Vector<MidiDevice>(0, 1);
+    public static final Vector<MidiDevice> transmitters = new Vector<>(0, 1);
     static int deviceIndex = 0;
 
-    private MidiManager() {}
+    private MidiManager() {
+    }
 
     public static MidiManager getMidiManager() {
         return midiManager;
@@ -62,21 +66,17 @@ public class MidiManager {
         transmitters.clear();
         transmitters.add(null);
         deviceIndex = 0;
-
         // Get a list of MIDI input device.
         MidiDevice.Info[] infos = MidiSystem.getMidiDeviceInfo();
         for (MidiDevice.Info info : infos) {
-
             try {
                 device = MidiSystem.getMidiDevice(info);
-
-                if (device.getMaxTransmitters() != 0 && !Objects.equals(info.getVendor(), "Oracle Corporation")) {
-
-                    transmitters.add(device);
-
-                    if (info.getName().equals(BlockTunerConfig.getMidiDeviceName())) {
-                        deviceIndex = transmitters.size() - 1;
-                    }
+                if (device.getMaxTransmitters() == 0 || Objects.equals(info.getVendor(), "Oracle Corporation")) {
+                    return;
+                }
+                transmitters.add(device);
+                if (info.getName().equals(BlockTunerConfig.getMidiDeviceName())) {
+                    deviceIndex = transmitters.size() - 1;
                 }
             } catch (MidiUnavailableException ignored) {
             }

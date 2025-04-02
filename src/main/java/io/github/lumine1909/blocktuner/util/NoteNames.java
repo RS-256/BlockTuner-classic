@@ -1,5 +1,6 @@
 /*
  *     Copyright (c) 2023, xwjcool.
+ *     Copyright (c) 2025, Lumine1909.
  *
  *     This program is free software: you can redistribute it and/or modify
  *     it under the terms of the GNU Lesser General Public License as published by
@@ -15,9 +16,12 @@
  *     along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package cool.xwj.blocktuner;
+package io.github.lumine1909.blocktuner.util;
+
+import io.github.lumine1909.blocktuner.BlockTunerConfig;
 
 public class NoteNames {
+
     public static String get(int note) {
         note %= 12;
         return get(note, BlockTunerConfig.getKeySignature());
@@ -28,11 +32,11 @@ public class NoteNames {
         switch (note) {
             case 0 -> {
                 if (keySignature >= -1) {
-                    noteName = "F\u266f";
+                    noteName = "F♯";
                 } else if (keySignature <= -3) {
-                    noteName = "G\u266d";
+                    noteName = "G♭";
                 } else {
-                    noteName = "F\u266f | G\u266d";
+                    noteName = "F♯ | G♭";
                 }
             }
             case 1 -> {
@@ -41,77 +45,77 @@ public class NoteNames {
                 } else if (keySignature <= 4 && keySignature >= -6) {
                     noteName = "G";
                     if (keySignature >= 3 || keySignature <= -5) {
-                        noteName = "G\u266e";
+                        noteName = "G♮";
                     }
-                } else if (keySignature == 5){
-                    noteName = "F\ud834\udd2a | G\u266e";
+                } else if (keySignature == 5) {
+                    noteName = "F\ud834\udd2a | G♮";
                 } else {
-                    noteName = "G\u266e | A\ud834\udd2b";
+                    noteName = "G♮ | A\ud834\udd2b";
                 }
             }
             case 2 -> {
                 if (keySignature >= 1) {
-                    noteName = "G\u266f";
+                    noteName = "G♯";
                 } else if (keySignature <= -1) {
-                    noteName = "A\u266d";
+                    noteName = "A♭";
                 } else {
-                    noteName = "G\u266f | A\u266d";
+                    noteName = "G♯ | A♭";
                 }
             }
             case 3 -> {
                 if (keySignature >= 7) {
-                    noteName = "G\ud834\udd2a | A\u266e";
+                    noteName = "G\ud834\udd2a | A♮";
                 } else if (keySignature >= -4) {
                     noteName = "A";
                     if (keySignature <= -3 || keySignature >= 5) {
-                        noteName = "A\u266e";
+                        noteName = "A♮";
                     }
                 } else if (keySignature <= -6) {
                     noteName = "B\ud834\udd2b";
                 } else {
-                    noteName = "A\u266e | B\ud834\udd2b";
+                    noteName = "A♮ | B\ud834\udd2b";
                 }
             }
             case 4 -> {
                 if (keySignature >= 3) {
-                    noteName = "A\u266f";
+                    noteName = "A♯";
                 } else if (keySignature <= 1) {
-                    noteName = "B\u266d";
+                    noteName = "B♭";
                 } else {
-                    noteName = "A\u266f | B\u266d";
+                    noteName = "A♯ | B♭";
                 }
             }
             case 5 -> {
                 if (keySignature >= -2) {
                     noteName = "B";
                     if (keySignature <= -1 || keySignature >= 7) {
-                        noteName = "B\u266e";
+                        noteName = "B♮";
                     }
                 } else if (keySignature <= -4) {
-                    noteName = "C\u266d";
+                    noteName = "C♭";
                 } else {
-                    noteName = "B\u266e | C\u266d";
+                    noteName = "B♮ | C♭";
                 }
             }
             case 6 -> {
                 if (keySignature >= 5) {
-                    noteName = "B\u266f";
+                    noteName = "B♯";
                 } else if (keySignature <= 3) {
                     noteName = "C";
                     if (keySignature >= 2 || keySignature <= -6) {
-                        noteName = "C\u266e";
+                        noteName = "C♮";
                     }
                 } else {
-                    noteName = "B\u266f | C\u266e";
+                    noteName = "B♯ | C♮";
                 }
             }
             case 7 -> {
                 if (keySignature >= 0) {
-                    noteName = "C\u266f";
+                    noteName = "C♯";
                 } else if (keySignature <= -2) {
-                    noteName = "D\u266d";
+                    noteName = "D♭";
                 } else {
-                    noteName = "C\u266f | D\u266d";
+                    noteName = "C♯ | D♭";
                 }
             }
             case 8 -> {
@@ -120,47 +124,47 @@ public class NoteNames {
                 } else if (keySignature >= -5 && keySignature <= 5) {
                     noteName = "D";
                     if (keySignature <= -4 || keySignature >= 4) {
-                        noteName = "D\u266e";
+                        noteName = "D♮";
                     }
                 } else if (keySignature <= -7) {
                     noteName = "E\ud834\udd2b";
                 } else if (keySignature == -6) {
-                    noteName = "C\ud834\udd2a | D\u266e";
+                    noteName = "C\ud834\udd2a | D♮";
                 } else {
-                    noteName = "D\u266e | E\ud834\udd2b";
+                    noteName = "D♮ | E\ud834\udd2b";
                 }
             }
             case 9 -> {
                 if (keySignature >= 2) {
-                    noteName = "D\u266f";
+                    noteName = "D♯";
                 } else if (keySignature <= 0) {
-                    noteName = "E\u266d";
+                    noteName = "E♭";
                 } else {
-                    noteName = "D\u266f | E\u266d";
+                    noteName = "D♯ | E♭";
                 }
             }
             case 10 -> {
                 if (keySignature >= -3) {
                     noteName = "E";
                     if (keySignature <= -2 || keySignature >= 6) {
-                        noteName = "E\u266e";
+                        noteName = "E♮";
                     }
                 } else if (keySignature <= -5) {
-                    noteName = "F\u266d";
+                    noteName = "F♭";
                 } else {
-                    noteName = "E\u266e | F\u266d";
+                    noteName = "E♮ | F♭";
                 }
             }
             case 11 -> {
                 if (keySignature >= 4) {
-                    noteName = "E\u266f";
+                    noteName = "E♯";
                 } else if (keySignature <= 2) {
                     noteName = "F";
                     if (keySignature >= 1 || keySignature <= -7) {
-                        noteName = "F\u266e";
+                        noteName = "F♮";
                     }
                 } else {
-                    noteName = "E\u266f | F\u266e";
+                    noteName = "E♯ | F♮";
                 }
             }
         }
