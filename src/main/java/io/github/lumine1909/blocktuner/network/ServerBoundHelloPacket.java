@@ -32,10 +32,10 @@ public record ServerBoundHelloPacket(int protocolVersion) implements CustomPacke
 
     public static final ResourceLocation ID = id("server_bound_hello");
     public static final CustomPacketPayload.Type<ServerBoundHelloPacket> TYPE = new CustomPacketPayload.Type<>(ID);
-    public static final StreamCodec<RegistryFriendlyByteBuf, ClientBoundHelloPacket> CODEC = StreamCodec.composite(
+    public static final StreamCodec<RegistryFriendlyByteBuf, ServerBoundHelloPacket> CODEC = StreamCodec.composite(
         ByteBufCodecs.INT,
-        ClientBoundHelloPacket::protocolVersion,
-        ClientBoundHelloPacket::new
+        ServerBoundHelloPacket::protocolVersion,
+        ServerBoundHelloPacket::new
     );
 
     @Override

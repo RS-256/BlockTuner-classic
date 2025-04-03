@@ -20,6 +20,7 @@ package io.github.lumine1909.blocktuner;
 
 import io.github.lumine1909.blocktuner.display.TuningScreen;
 import io.github.lumine1909.blocktuner.network.ClientBoundHelloPacket;
+import io.github.lumine1909.blocktuner.network.ServerBoundHelloPacket;
 import io.github.lumine1909.blocktuner.util.MidiManager;
 import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.api.EnvType;
@@ -27,11 +28,14 @@ import net.fabricmc.api.Environment;
 import net.fabricmc.fabric.api.client.networking.v1.ClientPlayConnectionEvents;
 import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
 import net.fabricmc.fabric.api.event.player.UseBlockCallback;
+import net.fabricmc.fabric.api.networking.v1.ServerPlayConnectionEvents;
 import net.minecraft.client.Minecraft;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.block.Blocks;
+
+import static io.github.lumine1909.blocktuner.BlockTuner.TUNING_PROTOCOL;
 
 @Environment(EnvType.CLIENT)
 public class BlockTunerClient implements ClientModInitializer {
@@ -53,9 +57,8 @@ public class BlockTunerClient implements ClientModInitializer {
             }
             return InteractionResult.PASS;
         });
-
-        // knowing a BlockTuner server
         ClientPlayNetworking.registerGlobalReceiver(ClientBoundHelloPacket.TYPE, ClientBoundHelloPacket::receive);
+        ClientPlayConnectionEvents.JOIN.register((handler, sender, server) -> sender.sendPacket(new ServerBoundHelloPacket(TUNING_PROTOCOL)));
         ClientPlayConnectionEvents.DISCONNECT.register((handler, client) -> BlockTunerConfig.onBlockTunerServer = false);
     }
 }

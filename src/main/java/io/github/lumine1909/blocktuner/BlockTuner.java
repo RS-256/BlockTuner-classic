@@ -19,6 +19,7 @@
 package io.github.lumine1909.blocktuner;
 
 import io.github.lumine1909.blocktuner.network.ClientBoundHelloPacket;
+import io.github.lumine1909.blocktuner.network.ServerBoundHelloPacket;
 import io.github.lumine1909.blocktuner.network.ServerBoundTuningPacket;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.command.v2.CommandRegistrationCallback;
@@ -45,8 +46,9 @@ public class BlockTuner implements ModInitializer {
         LOGGER.info("[BlockTuner] Now Loading BlockTuner!");
         CommandRegistrationCallback.EVENT.register(BlockTunerCommands::register);
         PayloadTypeRegistry.playS2C().register(ClientBoundHelloPacket.TYPE, ClientBoundHelloPacket.CODEC);
+        PayloadTypeRegistry.playC2S().register(ServerBoundHelloPacket.TYPE, ServerBoundHelloPacket.CODEC);
         PayloadTypeRegistry.playC2S().register(ServerBoundTuningPacket.TYPE, ServerBoundTuningPacket.CODEC);
-        ServerPlayConnectionEvents.JOIN.register((handler, sender, server) -> sender.sendPacket(new ClientBoundHelloPacket(TUNING_PROTOCOL)));
         ServerPlayNetworking.registerGlobalReceiver(ServerBoundTuningPacket.TYPE, ServerBoundTuningPacket::receive);
+        ServerPlayNetworking.registerGlobalReceiver(ServerBoundHelloPacket.TYPE, ServerBoundHelloPacket::receive);
     }
 }
