@@ -38,16 +38,16 @@ public record ServerBoundHelloPacket(int protocolVersion) implements CustomPacke
         ServerBoundHelloPacket::new
     );
 
-    @Override
-    public @NotNull CustomPacketPayload.Type<? extends CustomPacketPayload> type() {
-        return TYPE;
-    }
-
     public static void receive(ServerBoundHelloPacket payload, ServerPlayNetworking.Context context) {
         int clientProtocol = payload.protocolVersion();
         ServerPlayer player = context.player();
         if (BlockTuner.TUNING_PROTOCOL == clientProtocol) {
             ServerPlayNetworking.send(player, new ClientBoundHelloPacket(BlockTuner.TUNING_PROTOCOL));
         }
+    }
+
+    @Override
+    public @NotNull CustomPacketPayload.Type<? extends CustomPacketPayload> type() {
+        return TYPE;
     }
 }

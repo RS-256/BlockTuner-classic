@@ -29,8 +29,8 @@ import java.util.Vector;
 
 public class MidiManager {
 
-    private static final MidiManager midiManager = new MidiManager();
     public static final Vector<MidiDevice> transmitters = new Vector<>(0, 1);
+    private static final MidiManager midiManager = new MidiManager();
     static int deviceIndex = 0;
 
     private MidiManager() {

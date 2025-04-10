@@ -32,7 +32,6 @@ import net.minecraft.world.level.gameevent.GameEvent;
 import org.jetbrains.annotations.NotNull;
 
 import static io.github.lumine1909.blocktuner.BlockTuner.id;
-import static net.minecraft.world.level.block.NoteBlock.INSTRUMENT;
 
 public record ServerBoundTuningPacket(BlockPos blockPos, int note) implements CustomPacketPayload {
 

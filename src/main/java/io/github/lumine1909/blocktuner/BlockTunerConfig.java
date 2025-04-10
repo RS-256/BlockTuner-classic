@@ -37,11 +37,11 @@ public class BlockTunerConfig {
     private static final String KEY_TO_PIANO = "key-to-piano";
     private static final String MIDI_DEVICE = "midi-device";
     private static final String KEY_SIGNATURE = "key-signature";
+    public static int keySignature = 0;
+    public static boolean onBlockTunerServer = false;
     private static String midiDeviceName = "";
     private static boolean keyToPiano = false;
     private static boolean playMode = false;
-    public static int keySignature = 0;
-    public static boolean onBlockTunerServer = false;
 
     public static void save() {
 

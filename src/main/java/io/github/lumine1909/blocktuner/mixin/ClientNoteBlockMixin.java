@@ -44,6 +44,11 @@ public class ClientNoteBlockMixin extends Block {
         super(properties);
     }
 
+    @Unique
+    private static void copyBlockState(BlockState state, net.minecraft.world.item.ItemStack stack) {
+        stack.set(DataComponents.BLOCK_STATE, BlockItemStateProperties.EMPTY.with(NoteBlock.NOTE, state));
+    }
+
     @Override
     protected @NotNull ItemStack getCloneItemStack(LevelReader levelReader, BlockPos blockPos, BlockState blockState, boolean bl) {
         ItemStack stack = super.getCloneItemStack(levelReader, blockPos, blockState, bl);
@@ -51,11 +56,6 @@ public class ClientNoteBlockMixin extends Block {
             copyBlockState(blockState, stack);
         }
         return stack;
-    }
-
-    @Unique
-    private static void copyBlockState(BlockState state, net.minecraft.world.item.ItemStack stack) {
-        stack.set(DataComponents.BLOCK_STATE, BlockItemStateProperties.EMPTY.with(NoteBlock.NOTE, state));
     }
 
     @Override

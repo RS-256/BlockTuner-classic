@@ -40,15 +40,15 @@ public record ClientBoundHelloPacket(int protocolVersion) implements CustomPacke
         ClientBoundHelloPacket::new
     );
 
-    @Override
-    public @NotNull Type<? extends CustomPacketPayload> type() {
-        return TYPE;
-    }
-
     public static void receive(ClientBoundHelloPacket payload, ClientPlayNetworking.Context context) {
         if (BlockTuner.TUNING_PROTOCOL == payload.protocolVersion()) {
             Minecraft.getInstance().execute(() -> BlockTunerConfig.onBlockTunerServer = true);
             context.player().displayClientMessage(Component.translatable("blocktuner.available"), false);
         }
+    }
+
+    @Override
+    public @NotNull Type<? extends CustomPacketPayload> type() {
+        return TYPE;
     }
 }

@@ -21,9 +21,9 @@ package io.github.lumine1909.blocktuner.display;
 import com.mojang.blaze3d.systems.RenderSystem;
 import io.github.lumine1909.blocktuner.BlockTuner;
 import io.github.lumine1909.blocktuner.BlockTunerConfig;
+import io.github.lumine1909.blocktuner.network.ServerBoundTuningPacket;
 import io.github.lumine1909.blocktuner.util.MidiManager;
 import io.github.lumine1909.blocktuner.util.NoteNames;
-import io.github.lumine1909.blocktuner.network.ServerBoundTuningPacket;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
@@ -52,22 +52,20 @@ public class TuningScreen extends Screen {
     protected static final Component KEY_TO_PIANO_TOGGLE_TOOLTIP = Component.translatable("settings.blocktuner.key_to_piano");
     protected static final Component EMPTY_MIDI_DEVICE = Component.translatable("midi_device.empty");
     protected static final Component MIDI_DEVICE_REFRESH_TOOLTIP = Component.translatable("settings.blocktuner.refresh");
-
+    static final ResourceLocation TEXTURE = ResourceLocation.tryBuild("blocktuner", "textures/gui/container/tune.png");
     private final BlockPos pos;
     private final PianoKeyWidget[] pianoKeys = new PianoKeyWidget[25];
     private final MidiManager midiManager;
     private final MidiReceiver receiver;
+    protected int backgroundWidth = 256;
+    protected int backgroundHeight = 112;
+    protected int x;
+    protected int y;
     private PianoKeyWidget pressedKey = null;
     private MidiDevice currentDevice;
     private Component deviceName;
     private boolean deviceAvailable = true;
     private boolean configChanged = false;
-    protected int backgroundWidth = 256;
-    protected int backgroundHeight = 112;
-    protected int x;
-    protected int y;
-
-    static final ResourceLocation TEXTURE = ResourceLocation.tryBuild("blocktuner", "textures/gui/container/tune.png");
 
     public TuningScreen(Component title, BlockPos pos) {
         super(title);
@@ -76,6 +74,42 @@ public class TuningScreen extends Screen {
         midiManager = MidiManager.getMidiManager();
         currentDevice = midiManager.getCurrentDevice();
         receiver = new MidiReceiver();
+    }
+
+    public static void sendTuningPacket(BlockPos pos, int note) {
+        note = Mth.clamp(note, 0, 24);
+        ClientPlayNetworking.send(new ServerBoundTuningPacket(pos, note));
+    }
+
+    protected static int keyToNote(int scanCode) {
+        return switch (scanCode) {
+            case 3, 38 -> 7;
+            case 4, 39 -> 9;
+            case 6 -> 12;
+            case 7 -> 14;
+            case 8 -> 16;
+            case 10 -> 19;
+            case 11 -> 21;
+            case 13 -> 24;
+            case 16, 51 -> 6;
+            case 17, 52 -> 8;
+            case 18, 53 -> 10;
+            case 19 -> 11;
+            case 20 -> 13;
+            case 21 -> 15;
+            case 22 -> 17;
+            case 23 -> 18;
+            case 24 -> 20;
+            case 25 -> 22;
+            case 26 -> 23;
+            case 34 -> 0;
+            case 35 -> 2;
+            case 36 -> 4;
+            case 48 -> 1;
+            case 49 -> 3;
+            case 50 -> 5;
+            default -> -1;
+        };
     }
 
     @Override
@@ -156,6 +190,84 @@ public class TuningScreen extends Screen {
     @Override
     public boolean isPauseScreen() {
         return false;
+    }
+
+    @Override
+    public boolean mouseReleased(double mouseX, double mouseY, int button) {
+
+        this.setDragging(false);
+        if (pressedKey != null) {
+            return pressedKey.mouseReleased(mouseX, mouseY, button);
+        } else {
+            return super.mouseReleased(mouseX, mouseY, button);
+        }
+    }
+
+    @Override
+    public boolean keyPressed(int keyCode, int scanCode, int modifiers) {
+
+        if (BlockTunerConfig.isKeyToPiano() && keyCode != 256) {
+            int note = keyToNote(scanCode);
+            if (note >= 0 && note <= 24 && !pianoKeys[note].played) {
+                pianoKeys[note].onClick(0, 0);
+            }
+            return true;
+        } else {
+            if (keyCode == 69) {
+                this.close();
+                return true;
+            }
+            return super.keyPressed(keyCode, scanCode, modifiers);
+        }
+    }
+
+    @Override
+    public boolean keyReleased(int keyCode, int scanCode, int modifiers) {
+        int note = keyToNote(scanCode);
+        if (note >= 0 && note <= 24) {
+            pianoKeys[note].onRelease(0, 0);
+        }
+        return super.keyReleased(keyCode, scanCode, modifiers);
+    }
+
+    public void close() {
+        if (currentDevice != null && currentDevice.isOpen()) {
+            currentDevice.close();
+        }
+        receiver.close();
+        if (configChanged) {
+            BlockTunerConfig.save();
+        }
+        super.onClose();
+    }
+
+    protected void openCurrentDevice() {
+        try {
+            currentDevice.open();
+            deviceAvailable = true;
+            currentDevice.getTransmitter().setReceiver(receiver);
+        } catch (MidiUnavailableException e) {
+            deviceAvailable = false;
+            BlockTuner.LOGGER.info("[BlockTuner] MIDI device \"" + currentDevice.getDeviceInfo().getName() + "\" is currently unavailable. Is it busy or unplugged?");
+        }
+    }
+
+    static class KeySignature implements Renderable {
+
+        public int x;
+        public int y;
+
+        public KeySignature(int x, int y) {
+            this.x = x;
+            this.y = y;
+        }
+
+        @Override
+        public void render(GuiGraphics guiGraphics, int i, int j, float f) {
+            int keySignature = BlockTunerConfig.getKeySignature();
+            RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
+            guiGraphics.blit(RenderType::guiTextured, TEXTURE, this.x, this.y, (keySignature + 8) % 8 * 32, (keySignature + 8) / 8 * 16 + 224, 32, 16, 256, 256);
+        }
     }
 
     abstract class PianoKeyWidget extends AbstractWidget {
@@ -439,24 +551,6 @@ public class TuningScreen extends Screen {
         }
     }
 
-    static class KeySignature implements Renderable {
-
-        public int x;
-        public int y;
-
-        public KeySignature(int x, int y) {
-            this.x = x;
-            this.y = y;
-        }
-
-        @Override
-        public void render(GuiGraphics guiGraphics, int i, int j, float f) {
-            int keySignature = BlockTunerConfig.getKeySignature();
-            RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
-            guiGraphics.blit(RenderType::guiTextured, TEXTURE, this.x, this.y, (keySignature + 8) % 8 * 32, (keySignature + 8) / 8 * 16 + 224, 32, 16, 256, 256);
-        }
-    }
-
     class KeyAddSharpButton extends AbstractWidget {
 
         public KeyAddSharpButton(int x, int y) {
@@ -515,55 +609,6 @@ public class TuningScreen extends Screen {
         }
     }
 
-    @Override
-    public boolean mouseReleased(double mouseX, double mouseY, int button) {
-
-        this.setDragging(false);
-        if (pressedKey != null) {
-            return pressedKey.mouseReleased(mouseX, mouseY, button);
-        } else {
-            return super.mouseReleased(mouseX, mouseY, button);
-        }
-    }
-
-    @Override
-    public boolean keyPressed(int keyCode, int scanCode, int modifiers) {
-
-        if (BlockTunerConfig.isKeyToPiano() && keyCode != 256) {
-            int note = keyToNote(scanCode);
-            if (note >= 0 && note <= 24 && !pianoKeys[note].played) {
-                pianoKeys[note].onClick(0, 0);
-            }
-            return true;
-        } else {
-            if (keyCode == 69) {
-                this.close();
-                return true;
-            }
-            return super.keyPressed(keyCode, scanCode, modifiers);
-        }
-    }
-
-    @Override
-    public boolean keyReleased(int keyCode, int scanCode, int modifiers) {
-        int note = keyToNote(scanCode);
-        if (note >= 0 && note <= 24) {
-            pianoKeys[note].onRelease(0, 0);
-        }
-        return super.keyReleased(keyCode, scanCode, modifiers);
-    }
-
-    public void close() {
-        if (currentDevice != null && currentDevice.isOpen()) {
-            currentDevice.close();
-        }
-        receiver.close();
-        if (configChanged) {
-            BlockTunerConfig.save();
-        }
-        super.onClose();
-    }
-
     class MidiReceiver implements Receiver {
 
         public MidiReceiver() {
@@ -586,52 +631,5 @@ public class TuningScreen extends Screen {
 
         public void close() {
         }
-    }
-
-    protected void openCurrentDevice() {
-        try {
-            currentDevice.open();
-            deviceAvailable = true;
-            currentDevice.getTransmitter().setReceiver(receiver);
-        } catch (MidiUnavailableException e) {
-            deviceAvailable = false;
-            BlockTuner.LOGGER.info("[BlockTuner] MIDI device \"" + currentDevice.getDeviceInfo().getName() + "\" is currently unavailable. Is it busy or unplugged?");
-        }
-    }
-
-    public static void sendTuningPacket(BlockPos pos, int note) {
-        note = Mth.clamp(note, 0, 24);
-        ClientPlayNetworking.send(new ServerBoundTuningPacket(pos, note));
-    }
-
-    protected static int keyToNote(int scanCode) {
-        return switch (scanCode) {
-            case 3, 38 -> 7;
-            case 4, 39 -> 9;
-            case 6 -> 12;
-            case 7 -> 14;
-            case 8 -> 16;
-            case 10 -> 19;
-            case 11 -> 21;
-            case 13 -> 24;
-            case 16, 51 -> 6;
-            case 17, 52 -> 8;
-            case 18, 53 -> 10;
-            case 19 -> 11;
-            case 20 -> 13;
-            case 21 -> 15;
-            case 22 -> 17;
-            case 23 -> 18;
-            case 24 -> 20;
-            case 25 -> 22;
-            case 26 -> 23;
-            case 34 -> 0;
-            case 35 -> 2;
-            case 36 -> 4;
-            case 48 -> 1;
-            case 49 -> 3;
-            case 50 -> 5;
-            default -> -1;
-        };
     }
 }
