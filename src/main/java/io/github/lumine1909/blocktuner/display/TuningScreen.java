@@ -205,7 +205,6 @@ public class TuningScreen extends Screen {
 
     @Override
     public boolean keyPressed(int keyCode, int scanCode, int modifiers) {
-
         if (BlockTunerConfig.isKeyToPiano() && keyCode != 256) {
             int note = keyToNote(scanCode);
             if (note >= 0 && note <= 24 && !pianoKeys[note].played) {

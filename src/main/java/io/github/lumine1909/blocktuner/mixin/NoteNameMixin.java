@@ -37,9 +37,9 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 public class NoteNameMixin {
 
     @Unique
-    private static final Style NOTE_STYLE = Style.EMPTY.withColor(ChatFormatting.AQUA);
+    private static final Style NOTE_STYLE = Style.EMPTY.withColor(ChatFormatting.AQUA).withItalic(false);
 
-    @Inject(method = "getHoverName", at = @At("HEAD"), cancellable = true)
+    @Inject(method = "getItemName", at = @At("HEAD"), cancellable = true)
     private void getNoteName(CallbackInfoReturnable<Component> cir) {
         ItemStack itemStack = (ItemStack) (Object) this;
         BlockItemStateProperties properties;
