@@ -31,6 +31,13 @@ dependencies {
 	// You may need to force-disable transitiveness on them.
 }
 
+loom {
+	accessWidenerPath = file("src/main/resources/blocktuner.accesswidener")
+	mixin {
+		defaultRefmapName = "blocktuner-fabric-refmap.json"
+	}
+}
+
 processResources {
 	inputs.property "version", project.version
 

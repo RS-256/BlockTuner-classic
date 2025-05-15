@@ -10,7 +10,8 @@
   "client": [
     "GuiMixin",
     "ClientNoteBlockMixin",
-    "NoteNameMixin"
+    "NoteNameMixin",
+    "CommandSuggestionsMixin"
   ],
   "injectors": {
     "defaultRequire": 1
