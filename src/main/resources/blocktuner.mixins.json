@@ -5,13 +5,15 @@
   "refmap": "blocktuner-fabric-refmap.json",
   "compatibilityLevel": "JAVA_21",
   "mixins": [
-    "NoteBlockMixin"
+    "NoteBlockMixin",
+    "PlaySoundCommandMixin"
   ],
   "client": [
-    "GuiMixin",
     "ClientNoteBlockMixin",
+    "CommandSuggestionsMixin",
+    "GuiMixin",
     "NoteNameMixin",
-    "CommandSuggestionsMixin"
+    "SoundEngineMixin"
   ],
   "injectors": {
     "defaultRequire": 1
