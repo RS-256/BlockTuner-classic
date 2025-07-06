@@ -18,7 +18,6 @@
 
 package io.github.lumine1909.blocktuner.mixin;
 
-import com.mojang.blaze3d.systems.RenderSystem;
 import io.github.lumine1909.blocktuner.display.NoteNameHud;
 import net.minecraft.client.DeltaTracker;
 import net.minecraft.client.gui.Gui;
@@ -34,6 +33,5 @@ public class GuiMixin {
     @Inject(method = "render", at = @At("TAIL"))
     private void renderNoteNameHud(GuiGraphics guiGraphics, DeltaTracker deltaTracker, CallbackInfo ci) {
         NoteNameHud.render(guiGraphics);
-        RenderSystem.setShaderColor(1.0f, 1.0f, 1.0f, 1.0f);
     }
 }

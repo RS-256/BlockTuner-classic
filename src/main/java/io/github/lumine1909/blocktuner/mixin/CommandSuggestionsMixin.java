@@ -24,19 +24,16 @@ public abstract class CommandSuggestionsMixin {
     @Final
     @Shadow
     CommandSuggestions field_21615;
-
-    @Shadow
-    public abstract void cycle(int i);
-
     @Shadow
     boolean tabCycles;
-
     @Shadow
     @Final
     private List<Suggestion> suggestionList;
-
     @Shadow
     private int current;
+
+    @Shadow
+    public abstract void cycle(int i);
 
     @Inject(
         method = "useSuggestion",

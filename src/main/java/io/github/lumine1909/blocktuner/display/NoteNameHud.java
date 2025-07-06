@@ -44,7 +44,7 @@ public class NoteNameHud {
                     int note = state.getValue(NoteBlock.NOTE);
                     int x = client.getWindow().getGuiScaledWidth() / 2 + 4;
                     int y = client.getWindow().getGuiScaledHeight() / 2 + 4;
-                    graphics.drawString(client.font, NoteNames.get(note) + ", " + note, x, y, 0x66ccff, true);
+                    graphics.drawString(client.font, NoteNames.get(note) + ", " + note, x, y, 0xff66ccff);
                 }
             }
         }

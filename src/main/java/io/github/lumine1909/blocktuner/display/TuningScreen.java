@@ -18,7 +18,6 @@
 
 package io.github.lumine1909.blocktuner.display;
 
-import com.mojang.blaze3d.systems.RenderSystem;
 import io.github.lumine1909.blocktuner.BlockTuner;
 import io.github.lumine1909.blocktuner.BlockTunerConfig;
 import io.github.lumine1909.blocktuner.network.ServerBoundTuningPacket;
@@ -32,7 +31,7 @@ import net.minecraft.client.gui.components.AbstractWidget;
 import net.minecraft.client.gui.components.Renderable;
 import net.minecraft.client.gui.narration.NarrationElementOutput;
 import net.minecraft.client.gui.screens.Screen;
-import net.minecraft.client.renderer.RenderType;
+import net.minecraft.client.renderer.RenderPipelines;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
@@ -180,11 +179,11 @@ public class TuningScreen extends Screen {
     }
 
     protected void drawBackground(GuiGraphics graphics, float delta, int mouseX, int mouseY) {
-        RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
+        //RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
         assert this.minecraft != null;
         int i = (this.width - this.backgroundWidth) / 2;
         int j = (this.height - this.backgroundHeight) / 2;
-        graphics.blit(RenderType::guiTextured, TEXTURE, i, j, 0, 0, this.backgroundWidth, this.backgroundHeight, 256, 256);
+        graphics.blit(RenderPipelines.GUI_TEXTURED, TEXTURE, i, j, 0, 0, this.backgroundWidth, this.backgroundHeight, 256, 256);
     }
 
     @Override
@@ -264,8 +263,8 @@ public class TuningScreen extends Screen {
         @Override
         public void render(GuiGraphics guiGraphics, int i, int j, float f) {
             int keySignature = BlockTunerConfig.getKeySignature();
-            RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
-            guiGraphics.blit(RenderType::guiTextured, TEXTURE, this.x, this.y, (keySignature + 8) % 8 * 32, (keySignature + 8) / 8 * 16 + 224, 32, 16, 256, 256);
+            //RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
+            guiGraphics.blit(RenderPipelines.GUI_TEXTURED, TEXTURE, this.x, this.y, (keySignature + 8) % 8 * 32, (keySignature + 8) / 8 * 16 + 224, 32, 16, 256, 256);
         }
     }
 
@@ -286,7 +285,7 @@ public class TuningScreen extends Screen {
                 return;
             }
             if (this.isHovered) {
-                graphics.renderTooltip(TuningScreen.this.font, Component.literal(NoteNames.get(note)), TuningScreen.this.x - 8, TuningScreen.this.y - 2);
+                graphics.setTooltipForNextFrame(TuningScreen.this.font, Component.literal(NoteNames.get(note)), TuningScreen.this.x - 8, TuningScreen.this.y - 2);
             }
         }
 
@@ -345,7 +344,7 @@ public class TuningScreen extends Screen {
         @Override
         public void renderWidget(GuiGraphics graphics, int mouseX, int mouseY, float delta) {
             this.isHovered = mouseX >= this.getX() && mouseY >= this.getY() && mouseX < this.getX() + this.width && mouseY < this.getY() + this.height;
-            RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
+            //RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
 
             int status = 0;
             if (played) {
@@ -353,7 +352,7 @@ public class TuningScreen extends Screen {
             } else if (this.isHovered()) {
                 status = 2;
             }
-            graphics.blit(RenderType::guiTextured, TEXTURE, this.getX(), this.getY(), 16 * status, 112, 16, 38, 256, 256);
+            graphics.blit(RenderPipelines.GUI_TEXTURED, TEXTURE, this.getX(), this.getY(), 16 * status, 112, 16, 38, 256, 256);
         }
 
     }
@@ -373,7 +372,7 @@ public class TuningScreen extends Screen {
             this.isHovered = mouseX >= this.getX() && mouseY >= this.getY() && mouseX < this.getX() + this.width && mouseY < this.getY() + this.height;
             this.isHovered = this.isHovered && !mask;
 
-            RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
+            //RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
 
             int status = 0;
             if (played) {
@@ -382,7 +381,7 @@ public class TuningScreen extends Screen {
                 status = 2;
             }
 
-            graphics.blit(RenderType::guiTextured, TEXTURE, this.getX(), this.getY(), 16 * status + 48 * keyShape + 48, 112, 16, 38, 256, 256);
+            graphics.blit(RenderPipelines.GUI_TEXTURED, TEXTURE, this.getX(), this.getY(), 16 * status + 48 * keyShape + 48, 112, 16, 38, 256, 256);
         }
 
         @Override
@@ -399,7 +398,7 @@ public class TuningScreen extends Screen {
 
         @Override
         public void renderWidget(GuiGraphics graphics, int mouseX, int mouseY, float delta) {
-            RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
+            //RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
 
             int status = 0;
             if (BlockTunerConfig.isPlayMode()) {
@@ -408,9 +407,9 @@ public class TuningScreen extends Screen {
             if (this.isHovered()) {
                 status += 1;
             }
-            graphics.blit(RenderType::guiTextured, TEXTURE, this.getX(), this.getY(), 192 + 16 * status, 112, 16, 16, 256, 256);
+            graphics.blit(RenderPipelines.GUI_TEXTURED, TEXTURE, this.getX(), this.getY(), 192 + 16 * status, 112, 16, 16, 256, 256);
             if (this.isHovered()) {
-                graphics.renderTooltip(TuningScreen.this.font, PLAY_MODE_TOGGLE_TOOLTIP, TuningScreen.this.x - 8, TuningScreen.this.y - 2);
+                graphics.setTooltipForNextFrame(TuningScreen.this.font, PLAY_MODE_TOGGLE_TOOLTIP, TuningScreen.this.x - 8, TuningScreen.this.y - 2);
             }
         }
 
@@ -433,7 +432,7 @@ public class TuningScreen extends Screen {
 
         @Override
         public void renderWidget(GuiGraphics graphics, int mouseX, int mouseY, float delta) {
-            RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
+            //RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
 
             int status = 0;
             if (BlockTunerConfig.isKeyToPiano()) {
@@ -442,9 +441,9 @@ public class TuningScreen extends Screen {
             if (this.isHovered()) {
                 status += 1;
             }
-            graphics.blit(RenderType::guiTextured, TEXTURE, this.getX(), this.getY(), 192 + 16 * status, 128, 16, 16, 256, 256);
+            graphics.blit(RenderPipelines.GUI_TEXTURED, TEXTURE, this.getX(), this.getY(), 192 + 16 * status, 128, 16, 16, 256, 256);
             if (this.isHovered()) {
-                graphics.renderTooltip(TuningScreen.this.font, KEY_TO_PIANO_TOGGLE_TOOLTIP, TuningScreen.this.x - 8, TuningScreen.this.y - 2);
+                graphics.setTooltipForNextFrame(TuningScreen.this.font, KEY_TO_PIANO_TOGGLE_TOOLTIP, TuningScreen.this.x - 8, TuningScreen.this.y - 2);
             }
         }
 
@@ -472,7 +471,7 @@ public class TuningScreen extends Screen {
 
         @Override
         public void renderWidget(GuiGraphics graphics, int mouseX, int mouseY, float delta) {
-            RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
+            //RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
 
             int status = 0;
             if (midiManager.getDeviceIndex() > 0) {
@@ -484,9 +483,9 @@ public class TuningScreen extends Screen {
             if (!deviceAvailable) {
                 status += 4;
             }
-            graphics.blit(RenderType::guiTextured, TEXTURE, this.getX(), this.getY(), 192 + 16 * (status % 4), 144 + 16 * (status / 4), 16, 16, 256, 256);
+            graphics.blit(RenderPipelines.GUI_TEXTURED, TEXTURE, this.getX(), this.getY(), 192 + 16 * (status % 4), 144 + 16 * (status / 4), 16, 16, 256, 256);
             if (this.isHovered()) {
-                graphics.renderTooltip(TuningScreen.this.font, Component.translatable("settings.blocktuner.midi_device", deviceName), TuningScreen.this.x - 8, TuningScreen.this.y - 2);
+                graphics.setTooltipForNextFrame(TuningScreen.this.font, Component.translatable("settings.blocktuner.midi_device", deviceName), TuningScreen.this.x - 8, TuningScreen.this.y - 2);
             }
         }
 
@@ -524,15 +523,15 @@ public class TuningScreen extends Screen {
 
         @Override
         public void renderWidget(GuiGraphics graphics, int mouseX, int mouseY, float delta) {
-            RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
+            //RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
 
             int status = 0;
             if (this.isHovered()) {
                 status += 1;
             }
-            graphics.blit(RenderType::guiTextured, TEXTURE, this.getX(), this.getY(), 192 + 16 * status, 176, 16, 16, 256, 256);
+            graphics.blit(RenderPipelines.GUI_TEXTURED, TEXTURE, this.getX(), this.getY(), 192 + 16 * status, 176, 16, 16, 256, 256);
             if (this.isHovered()) {
-                graphics.renderTooltip(TuningScreen.this.font, MIDI_DEVICE_REFRESH_TOOLTIP, TuningScreen.this.x - 8, TuningScreen.this.y - 2);
+                graphics.setTooltipForNextFrame(TuningScreen.this.font, MIDI_DEVICE_REFRESH_TOOLTIP, TuningScreen.this.x - 8, TuningScreen.this.y - 2);
             }
         }
 
@@ -558,13 +557,13 @@ public class TuningScreen extends Screen {
 
         @Override
         public void renderWidget(GuiGraphics graphics, int mouseX, int mouseY, float delta) {
-            RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
+            //RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
 
             int status = 0;
             if (this.isHovered()) {
                 status += 1;
             }
-            graphics.blit(RenderType::guiTextured, TEXTURE, this.getX(), this.getY(), 8 * status, 152, 8, 8, 256, 256);
+            graphics.blit(RenderPipelines.GUI_TEXTURED, TEXTURE, this.getX(), this.getY(), 8 * status, 152, 8, 8, 256, 256);
         }
 
         @Override
@@ -588,13 +587,13 @@ public class TuningScreen extends Screen {
 
         @Override
         public void renderWidget(GuiGraphics graphics, int mouseX, int mouseY, float delta) {
-            RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
+            //RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
 
             int status = 0;
             if (this.isHovered()) {
                 status += 1;
             }
-            graphics.blit(RenderType::guiTextured, TEXTURE, this.getX(), this.getY(), 8 * status + 16, 152, 8, 8, 256, 256);
+            graphics.blit(RenderPipelines.GUI_TEXTURED, TEXTURE, this.getX(), this.getY(), 8 * status + 16, 152, 8, 8, 256, 256);
         }
 
         @Override
