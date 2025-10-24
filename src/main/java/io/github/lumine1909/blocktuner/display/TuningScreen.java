@@ -31,6 +31,8 @@ import net.minecraft.client.gui.components.AbstractWidget;
 import net.minecraft.client.gui.components.Renderable;
 import net.minecraft.client.gui.narration.NarrationElementOutput;
 import net.minecraft.client.gui.screens.Screen;
+import net.minecraft.client.input.KeyEvent;
+import net.minecraft.client.input.MouseButtonEvent;
 import net.minecraft.client.renderer.RenderPipelines;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
@@ -43,6 +45,8 @@ import javax.sound.midi.MidiDevice;
 import javax.sound.midi.MidiMessage;
 import javax.sound.midi.MidiUnavailableException;
 import javax.sound.midi.Receiver;
+
+import static io.github.lumine1909.blocktuner.util.InputUtil.DUMMY_EVENT;
 
 @Environment(EnvType.CLIENT)
 public class TuningScreen extends Screen {
@@ -192,40 +196,39 @@ public class TuningScreen extends Screen {
     }
 
     @Override
-    public boolean mouseReleased(double mouseX, double mouseY, int button) {
-
+    public boolean mouseReleased(MouseButtonEvent event) {
         this.setDragging(false);
         if (pressedKey != null) {
-            return pressedKey.mouseReleased(mouseX, mouseY, button);
+            return pressedKey.mouseReleased(event);
         } else {
-            return super.mouseReleased(mouseX, mouseY, button);
+            return super.mouseReleased(event);
         }
     }
 
     @Override
-    public boolean keyPressed(int keyCode, int scanCode, int modifiers) {
-        if (BlockTunerConfig.isKeyToPiano() && keyCode != 256) {
-            int note = keyToNote(scanCode);
+    public boolean keyPressed(KeyEvent event) {
+        if (BlockTunerConfig.isKeyToPiano() && event.key() != 256) {
+            int note = keyToNote(event.scancode());
             if (note >= 0 && note <= 24 && !pianoKeys[note].played) {
-                pianoKeys[note].onClick(0, 0);
+                pianoKeys[note].onClick(DUMMY_EVENT, false);
             }
             return true;
         } else {
-            if (keyCode == 69) {
+            if (event.key() == 69) {
                 this.close();
                 return true;
             }
-            return super.keyPressed(keyCode, scanCode, modifiers);
+            return super.keyPressed(event);
         }
     }
 
     @Override
-    public boolean keyReleased(int keyCode, int scanCode, int modifiers) {
-        int note = keyToNote(scanCode);
+    public boolean keyReleased(KeyEvent event) {
+        int note = keyToNote(event.scancode());
         if (note >= 0 && note <= 24) {
-            pianoKeys[note].onRelease(0, 0);
+            pianoKeys[note].onRelease(DUMMY_EVENT);
         }
-        return super.keyReleased(keyCode, scanCode, modifiers);
+        return super.keyReleased(event);
     }
 
     public void close() {
@@ -290,8 +293,7 @@ public class TuningScreen extends Screen {
         }
 
         @Override
-        public void onClick(double mouseX, double mouseY) {
-
+        public void onClick(MouseButtonEvent mouseButtonEvent, boolean bl) {
             pressedKey = this;
             played = true;
 
@@ -306,18 +308,18 @@ public class TuningScreen extends Screen {
         }
 
         @Override
-        public void onRelease(double mouseX, double mouseY) {
+        public void onRelease(MouseButtonEvent mouseButtonEvent) {
             played = false;
             pressedKey = null;
         }
 
         @Override
-        public boolean mouseClicked(double mouseX, double mouseY, int button) {
+        public boolean mouseClicked(MouseButtonEvent event, boolean bl) {
             if (this.active && this.visible) {
-                if (this.isValidClickButton(button)) {
-                    boolean bl = this.isMouseOver(mouseX, mouseY);
-                    if (bl) {
-                        this.onClick(mouseX, mouseY);
+                if (this.isValidClickButton(event.buttonInfo())) {
+                    boolean b = this.isMouseOver(event.x(), event.y());
+                    if (b) {
+                        this.onClick(event, bl);
                         return true;
                     }
                 }
@@ -414,7 +416,7 @@ public class TuningScreen extends Screen {
         }
 
         @Override
-        public void onClick(double mouseX, double mouseY) {
+        public void onClick(MouseButtonEvent mouseButtonEvent, boolean bl) {
             BlockTunerConfig.togglePlayMode();
             configChanged = true;
         }
@@ -448,7 +450,7 @@ public class TuningScreen extends Screen {
         }
 
         @Override
-        public void onClick(double mouseX, double mouseY) {
+        public void onClick(MouseButtonEvent mouseButtonEvent, boolean bl) {
             BlockTunerConfig.toggleKeyToPiano();
             configChanged = true;
         }
@@ -490,7 +492,7 @@ public class TuningScreen extends Screen {
         }
 
         @Override
-        public void onClick(double mouseX, double mouseY) {
+        public void onClick(MouseButtonEvent mouseButtonEvent, boolean bl) {
 
             if (currentDevice != null && currentDevice.isOpen()) {
                 currentDevice.close();
@@ -536,7 +538,7 @@ public class TuningScreen extends Screen {
         }
 
         @Override
-        public void onClick(double mouseX, double mouseY) {
+        public void onClick(MouseButtonEvent mouseButtonEvent, boolean bl) {
             midiManager.refreshMidiDevice();
             if (currentDevice != null) {
                 openCurrentDevice();
@@ -567,7 +569,7 @@ public class TuningScreen extends Screen {
         }
 
         @Override
-        public void onClick(double mouseX, double mouseY) {
+        public void onClick(MouseButtonEvent mouseButtonEvent, boolean bl) {
             BlockTunerConfig.keyAddSharp();
             configChanged = true;
         }
@@ -597,7 +599,7 @@ public class TuningScreen extends Screen {
         }
 
         @Override
-        public void onClick(double mouseX, double mouseY) {
+        public void onClick(MouseButtonEvent mouseButtonEvent, boolean bl) {
             BlockTunerConfig.keyAddFlat();
             configChanged = true;
         }
@@ -618,11 +620,11 @@ public class TuningScreen extends Screen {
                 assert minecraft != null;
                 if (message[0] >= -112 && message[2] != 0) {
                     // MIDI note on
-                    minecraft.execute(() -> pianoKeys[message[1] - 54].onClick(0, 0));
+                    minecraft.execute(() -> pianoKeys[message[1] - 54].onClick(DUMMY_EVENT, false));
 
                 } else {
                     // MIDI note off
-                    minecraft.execute(() -> pianoKeys[message[1] - 54].onRelease(0, 0));
+                    minecraft.execute(() -> pianoKeys[message[1] - 54].onRelease(DUMMY_EVENT));
                 }
             }
         }

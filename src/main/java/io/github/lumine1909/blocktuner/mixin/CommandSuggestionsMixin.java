@@ -3,10 +3,10 @@ package io.github.lumine1909.blocktuner.mixin;
 import com.llamalad7.mixinextras.sugar.Local;
 import com.llamalad7.mixinextras.sugar.ref.LocalRef;
 import com.mojang.brigadier.suggestion.Suggestion;
+import io.github.lumine1909.blocktuner.util.InputUtil;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.client.gui.components.CommandSuggestions;
-import net.minecraft.client.gui.screens.Screen;
 import org.objectweb.asm.Opcodes;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
@@ -46,9 +46,9 @@ public abstract class CommandSuggestionsMixin {
         )
     )
     private void injected(CallbackInfo ci, @Local LocalRef<Suggestion> suggestion) {
-        if (Screen.hasControlDown()) {
+        if (InputUtil.hasControlDown()) {
             if (this.tabCycles) {
-                this.cycle(Screen.hasShiftDown() ? 1 : -1);
+                this.cycle(InputUtil.hasShiftDown() ? 1 : -1);
                 suggestion.set(suggestionList.get(this.current));
             }
             field_21615.keepSuggestions = false;

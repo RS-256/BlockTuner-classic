@@ -18,10 +18,10 @@
 
 package io.github.lumine1909.blocktuner.display;
 
+import io.github.lumine1909.blocktuner.util.InputUtil;
 import io.github.lumine1909.blocktuner.util.NoteNames;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
-import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.NoteBlock;
@@ -35,7 +35,7 @@ public class NoteNameHud {
         Minecraft client = Minecraft.getInstance();
         assert client.level != null;
         assert client.player != null;
-        if (Screen.hasControlDown() && !client.player.isSpectator()) {
+        if (InputUtil.hasControlDown() && !client.player.isSpectator()) {
             HitResult hitResult = client.hitResult;
             if (hitResult != null && hitResult.getType() == HitResult.Type.BLOCK) {
                 BlockPos blockPos = ((BlockHitResult) hitResult).getBlockPos();

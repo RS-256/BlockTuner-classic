@@ -19,8 +19,8 @@
 package io.github.lumine1909.blocktuner.mixin;
 
 import io.github.lumine1909.blocktuner.display.TuningScreen;
+import io.github.lumine1909.blocktuner.util.InputUtil;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.network.chat.Component;
@@ -52,7 +52,7 @@ public class ClientNoteBlockMixin extends Block {
     @Override
     protected @NotNull ItemStack getCloneItemStack(LevelReader levelReader, BlockPos blockPos, BlockState blockState, boolean bl) {
         ItemStack stack = super.getCloneItemStack(levelReader, blockPos, blockState, bl);
-        if (Screen.hasControlDown()) {
+        if (InputUtil.hasControlDown()) {
             copyBlockState(blockState, stack);
         }
         return stack;
@@ -61,7 +61,7 @@ public class ClientNoteBlockMixin extends Block {
     @Override
     public void setPlacedBy(Level level, BlockPos blockPos, BlockState blockState, @Nullable LivingEntity livingEntity, ItemStack itemStack) {
         Minecraft client = Minecraft.getInstance();
-        if (level != null && livingEntity != null && livingEntity.equals(client.player) && Screen.hasControlDown()) {
+        if (level != null && livingEntity != null && livingEntity.equals(client.player) && InputUtil.hasControlDown()) {
             client.execute(() -> client.setScreen(new TuningScreen(Component.empty(), blockPos)));
         }
         super.setPlacedBy(level, blockPos, blockState, livingEntity, itemStack);

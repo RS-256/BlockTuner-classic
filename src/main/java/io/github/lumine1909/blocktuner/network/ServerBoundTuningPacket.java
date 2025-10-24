@@ -24,8 +24,8 @@ import net.minecraft.network.codec.ByteBufCodecs;
 import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.InteractionHand;
-import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.NoteBlock;
 import net.minecraft.world.level.gameevent.GameEvent;
@@ -48,7 +48,7 @@ public record ServerBoundTuningPacket(BlockPos blockPos, int note) implements Cu
     public static void receive(ServerBoundTuningPacket payload, ServerPlayNetworking.Context context) {
         BlockPos pos = payload.blockPos();
         int note = payload.note();
-        Level world = context.player().level();
+        ServerLevel world = context.player().level();
 
         if (world.getBlockState(pos).getBlock() != Blocks.NOTE_BLOCK) {
             return;

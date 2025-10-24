@@ -21,6 +21,7 @@ package io.github.lumine1909.blocktuner;
 import io.github.lumine1909.blocktuner.display.TuningScreen;
 import io.github.lumine1909.blocktuner.network.ClientBoundHelloPacket;
 import io.github.lumine1909.blocktuner.network.ServerBoundHelloPacket;
+import io.github.lumine1909.blocktuner.util.InputUtil;
 import io.github.lumine1909.blocktuner.util.MidiManager;
 import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.api.EnvType;
@@ -45,7 +46,7 @@ public class BlockTunerClient implements ClientModInitializer {
         MidiManager.getMidiManager().refreshMidiDevice();
         UseBlockCallback.EVENT.register((player, world, hand, hitResult) -> {
             if (BlockTunerConfig.onBlockTunerServer
-                && net.minecraft.client.gui.screens.Screen.hasControlDown()
+                && InputUtil.hasControlDown()
                 && !player.isSpectator()
                 && !player.isShiftKeyDown()
                 && world.getBlockState(hitResult.getBlockPos()).getBlock() == Blocks.NOTE_BLOCK
