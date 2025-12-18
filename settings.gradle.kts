@@ -1,0 +1,7 @@
+rootProject.name = "BlockTunerMod"
+pluginManagement {
+    repositories {
+        maven("https://maven.fabricmc.net/")
+        gradlePluginPortal()
+    }
+}

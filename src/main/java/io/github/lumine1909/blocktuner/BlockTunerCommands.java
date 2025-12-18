@@ -25,7 +25,6 @@ import net.minecraft.commands.CommandSourceStack;
 import net.minecraft.commands.Commands;
 import net.minecraft.commands.arguments.coordinates.BlockPosArgument;
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.NoteBlock;
@@ -36,6 +35,7 @@ public class BlockTunerCommands {
     public static void register(CommandDispatcher<CommandSourceStack> dispatcher, CommandBuildContext buildContext, Commands.CommandSelection selection) {
         dispatcher.register(
             Commands.literal("tune")
+                .requires(Commands.hasPermission(Commands.LEVEL_GAMEMASTERS))
                 .then(Commands.argument("pos", BlockPosArgument.blockPos())
                     .then(Commands.argument("note", IntegerArgumentType.integer(0, 24))
                         .executes(context -> tune(context.getSource(), BlockPosArgument.getLoadedBlockPos(context, "pos"), IntegerArgumentType.getInteger(context, "note"))))));
@@ -43,7 +43,7 @@ public class BlockTunerCommands {
 
     private static int tune(CommandSourceStack source, BlockPos pos, int note) {
         ServerLevel world = source.getLevel();
-        if (world.getBlockState(pos).getBlock() != Blocks.NOTE_BLOCK || (!source.hasPermission(2) && source.getPosition().closerThan(pos.getCenter(), 5.0d))) {
+        if (world.getBlockState(pos).getBlock() != Blocks.NOTE_BLOCK || !source.getPosition().closerThan(pos.getCenter(), 5.0d)) {
             return -1;
         }
         world.setBlock(pos, world.getBlockState(pos).setValue(NoteBlock.NOTE, note), 2 | 16);

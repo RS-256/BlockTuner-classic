@@ -36,18 +36,23 @@ import net.minecraft.client.input.MouseButtonEvent;
 import net.minecraft.client.renderer.RenderPipelines;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.util.Mth;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.level.block.Blocks;
+import org.jetbrains.annotations.NotNullByDefault;
+import org.jetbrains.annotations.Nullable;
 
 import javax.sound.midi.MidiDevice;
 import javax.sound.midi.MidiMessage;
 import javax.sound.midi.MidiUnavailableException;
 import javax.sound.midi.Receiver;
 
+import java.util.Objects;
+
 import static io.github.lumine1909.blocktuner.util.InputUtil.DUMMY_EVENT;
 
+@NotNullByDefault
 @Environment(EnvType.CLIENT)
 public class TuningScreen extends Screen {
 
@@ -55,7 +60,7 @@ public class TuningScreen extends Screen {
     protected static final Component KEY_TO_PIANO_TOGGLE_TOOLTIP = Component.translatable("settings.blocktuner.key_to_piano");
     protected static final Component EMPTY_MIDI_DEVICE = Component.translatable("midi_device.empty");
     protected static final Component MIDI_DEVICE_REFRESH_TOOLTIP = Component.translatable("settings.blocktuner.refresh");
-    static final ResourceLocation TEXTURE = ResourceLocation.tryBuild("blocktuner", "textures/gui/container/tune.png");
+    static final Identifier TEXTURE = Identifier.fromNamespaceAndPath("blocktuner", "textures/gui/container/tune.png");
     private final BlockPos pos;
     private final PianoKeyWidget[] pianoKeys = new PianoKeyWidget[25];
     private final MidiManager midiManager;
@@ -64,9 +69,9 @@ public class TuningScreen extends Screen {
     protected int backgroundHeight = 112;
     protected int x;
     protected int y;
-    private PianoKeyWidget pressedKey = null;
-    private MidiDevice currentDevice;
-    private Component deviceName;
+    private @Nullable PianoKeyWidget pressedKey = null;
+    private @Nullable MidiDevice currentDevice;
+    private @Nullable Component deviceName;
     private boolean deviceAvailable = true;
     private boolean configChanged = false;
 
@@ -171,7 +176,7 @@ public class TuningScreen extends Screen {
 
     @Override
     public void tick() {
-        if (minecraft == null || minecraft.level == null || minecraft.level.getBlockState(pos).getBlock() != Blocks.NOTE_BLOCK) {
+        if (minecraft.level == null || minecraft.level.getBlockState(pos).getBlock() != Blocks.NOTE_BLOCK) {
             this.close();
         }
     }
@@ -179,12 +184,11 @@ public class TuningScreen extends Screen {
     @Override
     public void renderBackground(GuiGraphics graphics, int mouseX, int mouseY, float delta) {
         super.renderBackground(graphics, mouseX, mouseY, delta);
-        this.drawBackground(graphics, delta, mouseX, mouseY);
+        this.drawBackground(graphics);
     }
 
-    protected void drawBackground(GuiGraphics graphics, float delta, int mouseX, int mouseY) {
+    protected void drawBackground(GuiGraphics graphics) {
         //RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
-        assert this.minecraft != null;
         int i = (this.width - this.backgroundWidth) / 2;
         int j = (this.height - this.backgroundHeight) / 2;
         graphics.blit(RenderPipelines.GUI_TEXTURED, TEXTURE, i, j, 0, 0, this.backgroundWidth, this.backgroundHeight, 256, 256);
@@ -243,13 +247,16 @@ public class TuningScreen extends Screen {
     }
 
     protected void openCurrentDevice() {
+        if (currentDevice == null) {
+            return;
+        }
         try {
             currentDevice.open();
             deviceAvailable = true;
             currentDevice.getTransmitter().setReceiver(receiver);
         } catch (MidiUnavailableException e) {
             deviceAvailable = false;
-            BlockTuner.LOGGER.info("[BlockTuner] MIDI device \"" + currentDevice.getDeviceInfo().getName() + "\" is currently unavailable. Is it busy or unplugged?");
+            BlockTuner.LOGGER.info("[BlockTuner] MIDI device \"{}\" is currently unavailable. Is it busy or unplugged?", currentDevice.getDeviceInfo().getName());
         }
     }
 
@@ -267,7 +274,7 @@ public class TuningScreen extends Screen {
         public void render(GuiGraphics guiGraphics, int i, int j, float f) {
             int keySignature = BlockTunerConfig.getKeySignature();
             //RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
-            guiGraphics.blit(RenderPipelines.GUI_TEXTURED, TEXTURE, this.x, this.y, (keySignature + 8) % 8 * 32, (keySignature + 8) / 8 * 16 + 224, 32, 16, 256, 256);
+            guiGraphics.blit(RenderPipelines.GUI_TEXTURED, TEXTURE, this.x, this.y, (keySignature + 8) % 8 * 32, (float) (keySignature + 8) / 8 * 16 + 224, 32, 16, 256, 256);
         }
     }
 
@@ -297,7 +304,7 @@ public class TuningScreen extends Screen {
             pressedKey = this;
             played = true;
 
-            if (minecraft != null && minecraft.player != null && minecraft.getConnection() != null) {
+            if (minecraft.player != null && minecraft.getConnection() != null) {
                 sendTuningPacket(pos, note);
                 minecraft.player.swing(InteractionHand.MAIN_HAND);
             }
@@ -386,10 +393,6 @@ public class TuningScreen extends Screen {
             graphics.blit(RenderPipelines.GUI_TEXTURED, TEXTURE, this.getX(), this.getY(), 16 * status + 48 * keyShape + 48, 112, 16, 38, 256, 256);
         }
 
-        @Override
-        public boolean isMouseOver(double d, double e) {
-            return this.active && this.visible && this.isHovered;
-        }
     }
 
     class PlayModeToggle extends AbstractWidget {
@@ -485,8 +488,8 @@ public class TuningScreen extends Screen {
             if (!deviceAvailable) {
                 status += 4;
             }
-            graphics.blit(RenderPipelines.GUI_TEXTURED, TEXTURE, this.getX(), this.getY(), 192 + 16 * (status % 4), 144 + 16 * (status / 4), 16, 16, 256, 256);
-            if (this.isHovered()) {
+            graphics.blit(RenderPipelines.GUI_TEXTURED, TEXTURE, this.getX(), this.getY(), 192 + 16 * (status % 4), 144 + 16 * ((float) status / 4), 16, 16, 256, 256);
+            if (this.isHovered() && deviceName != null) {
                 graphics.setTooltipForNextFrame(TuningScreen.this.font, Component.translatable("settings.blocktuner.midi_device", deviceName), TuningScreen.this.x - 8, TuningScreen.this.y - 2);
             }
         }
@@ -617,7 +620,6 @@ public class TuningScreen extends Screen {
         public void send(MidiMessage msg, long timeStamp) {
             byte[] message = msg.getMessage();
             if (message.length == 3 && message[0] <= -97 && message[1] >= 54 && message[1] <= 78) {
-                assert minecraft != null;
                 if (message[0] >= -112 && message[2] != 0) {
                     // MIDI note on
                     minecraft.execute(() -> pianoKeys[message[1] - 54].onClick(DUMMY_EVENT, false));

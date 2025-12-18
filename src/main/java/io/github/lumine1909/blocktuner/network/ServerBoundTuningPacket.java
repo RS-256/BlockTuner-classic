@@ -23,19 +23,20 @@ import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.codec.ByteBufCodecs;
 import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.NoteBlock;
 import net.minecraft.world.level.gameevent.GameEvent;
-import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.NotNullByDefault;
 
 import static io.github.lumine1909.blocktuner.BlockTuner.id;
 
+@NotNullByDefault
 public record ServerBoundTuningPacket(BlockPos blockPos, int note) implements CustomPacketPayload {
 
-    public static final ResourceLocation ID = id("server_bound_tuning");
+    public static final Identifier ID = id("server_bound_tuning");
     public static final CustomPacketPayload.Type<ServerBoundTuningPacket> TYPE = new CustomPacketPayload.Type<>(ID);
     public static final StreamCodec<RegistryFriendlyByteBuf, ServerBoundTuningPacket> CODEC = StreamCodec.composite(
         BlockPos.STREAM_CODEC,
@@ -63,7 +64,7 @@ public record ServerBoundTuningPacket(BlockPos blockPos, int note) implements Cu
     }
 
     @Override
-    public @NotNull Type<? extends CustomPacketPayload> type() {
+    public Type<? extends CustomPacketPayload> type() {
         return TYPE;
     }
 }

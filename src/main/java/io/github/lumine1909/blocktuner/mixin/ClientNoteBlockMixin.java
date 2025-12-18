@@ -32,11 +32,12 @@ import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.NoteBlock;
 import net.minecraft.world.level.block.state.BlockState;
-import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.NotNullByDefault;
 import org.jetbrains.annotations.Nullable;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Unique;
 
+@NotNullByDefault
 @Mixin(NoteBlock.class)
 public class ClientNoteBlockMixin extends Block {
 
@@ -50,7 +51,7 @@ public class ClientNoteBlockMixin extends Block {
     }
 
     @Override
-    protected @NotNull ItemStack getCloneItemStack(LevelReader levelReader, BlockPos blockPos, BlockState blockState, boolean bl) {
+    protected ItemStack getCloneItemStack(LevelReader levelReader, BlockPos blockPos, BlockState blockState, boolean bl) {
         ItemStack stack = super.getCloneItemStack(levelReader, blockPos, blockState, bl);
         if (InputUtil.hasControlDown()) {
             copyBlockState(blockState, stack);
@@ -61,7 +62,7 @@ public class ClientNoteBlockMixin extends Block {
     @Override
     public void setPlacedBy(Level level, BlockPos blockPos, BlockState blockState, @Nullable LivingEntity livingEntity, ItemStack itemStack) {
         Minecraft client = Minecraft.getInstance();
-        if (level != null && livingEntity != null && livingEntity.equals(client.player) && InputUtil.hasControlDown()) {
+        if (livingEntity != null && livingEntity.equals(client.player) && InputUtil.hasControlDown()) {
             client.execute(() -> client.setScreen(new TuningScreen(Component.empty(), blockPos)));
         }
         super.setPlacedBy(level, blockPos, blockState, livingEntity, itemStack);

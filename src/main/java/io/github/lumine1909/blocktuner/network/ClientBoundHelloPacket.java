@@ -25,14 +25,15 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.network.codec.ByteBufCodecs;
 import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
-import net.minecraft.resources.ResourceLocation;
-import org.jetbrains.annotations.NotNull;
+import net.minecraft.resources.Identifier;
+import org.jetbrains.annotations.NotNullByDefault;
 
 import static io.github.lumine1909.blocktuner.BlockTuner.id;
 
+@NotNullByDefault
 public record ClientBoundHelloPacket(int protocolVersion) implements CustomPacketPayload {
 
-    public static final ResourceLocation ID = id("client_bound_hello");
+    public static final Identifier ID = id("client_bound_hello");
     public static final CustomPacketPayload.Type<ClientBoundHelloPacket> TYPE = new CustomPacketPayload.Type<>(ID);
     public static final StreamCodec<RegistryFriendlyByteBuf, ClientBoundHelloPacket> CODEC = StreamCodec.composite(
         ByteBufCodecs.INT,
@@ -48,7 +49,7 @@ public record ClientBoundHelloPacket(int protocolVersion) implements CustomPacke
     }
 
     @Override
-    public @NotNull Type<? extends CustomPacketPayload> type() {
+    public Type<? extends CustomPacketPayload> type() {
         return TYPE;
     }
 }
