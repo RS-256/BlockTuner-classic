@@ -16,10 +16,10 @@
  *     along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package io.github.lumine1909.blocktuner.mixin;
+package com.rs256.blocktuner.mixin;
 
-import io.github.lumine1909.blocktuner.display.TuningScreen;
-import io.github.lumine1909.blocktuner.util.InputUtil;
+import com.rs256.blocktuner.display.TuningScreen;
+import com.rs256.blocktuner.util.InputUtil;
 import net.minecraft.client.Minecraft;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.component.DataComponents;

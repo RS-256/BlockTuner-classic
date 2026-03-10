@@ -16,11 +16,11 @@
  *     along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package io.github.lumine1909.blocktuner;
+package com.rs256.blocktuner;
 
-import io.github.lumine1909.blocktuner.network.ClientBoundHelloPacket;
-import io.github.lumine1909.blocktuner.network.ServerBoundHelloPacket;
-import io.github.lumine1909.blocktuner.network.ServerBoundTuningPacket;
+import com.rs256.blocktuner.network.ClientBoundHelloPacket;
+import com.rs256.blocktuner.network.ServerBoundHelloPacket;
+import com.rs256.blocktuner.network.ServerBoundTuningPacket;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.command.v2.CommandRegistrationCallback;
 import net.fabricmc.fabric.api.networking.v1.PayloadTypeRegistry;

@@ -16,7 +16,7 @@
  *     along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package io.github.lumine1909.blocktuner;
+package com.rs256.blocktuner;
 
 import net.fabricmc.loader.api.FabricLoader;
 

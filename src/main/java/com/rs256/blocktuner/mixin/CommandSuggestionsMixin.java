@@ -1,9 +1,9 @@
-package io.github.lumine1909.blocktuner.mixin;
+package com.rs256.blocktuner.mixin;
 
 import com.llamalad7.mixinextras.sugar.Local;
 import com.llamalad7.mixinextras.sugar.ref.LocalRef;
 import com.mojang.brigadier.suggestion.Suggestion;
-import io.github.lumine1909.blocktuner.util.InputUtil;
+import com.rs256.blocktuner.util.InputUtil;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.client.gui.components.CommandSuggestions;

@@ -1,4 +1,4 @@
-package io.github.lumine1909.blocktuner.util;
+package com.rs256.blocktuner.util;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.input.MouseButtonEvent;

@@ -16,7 +16,7 @@
  *     along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package io.github.lumine1909.blocktuner.mixin;
+package com.rs256.blocktuner.mixin;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.InteractionHand;

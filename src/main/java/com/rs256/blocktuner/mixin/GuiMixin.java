@@ -16,9 +16,9 @@
  *     along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package io.github.lumine1909.blocktuner.mixin;
+package com.rs256.blocktuner.mixin;
 
-import io.github.lumine1909.blocktuner.display.NoteNameHud;
+import com.rs256.blocktuner.display.NoteNameHud;
 import net.minecraft.client.DeltaTracker;
 import net.minecraft.client.gui.Gui;
 import net.minecraft.client.gui.GuiGraphics;

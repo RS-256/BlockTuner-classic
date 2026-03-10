@@ -16,9 +16,9 @@
  *     along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package io.github.lumine1909.blocktuner.util;
+package com.rs256.blocktuner.util;
 
-import io.github.lumine1909.blocktuner.BlockTunerConfig;
+import com.rs256.blocktuner.BlockTunerConfig;
 import org.jetbrains.annotations.Nullable;
 
 import javax.sound.midi.MidiDevice;

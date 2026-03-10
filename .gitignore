@@ -31,4 +31,14 @@ bin/
 # fabric
 
 run/
-remappedSrc/
+
+# java
+
+hs_err_*.log
+replay_*.log
+*.hprof
+*.jfr
+
+#version disabled
+
+versions/disabled/

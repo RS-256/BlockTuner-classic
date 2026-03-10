@@ -1,4 +1,4 @@
-package io.github.lumine1909.blocktuner.mixin;
+package com.rs256.blocktuner.mixin;
 
 import com.mojang.brigadier.arguments.FloatArgumentType;
 import net.minecraft.server.commands.PlaySoundCommand;

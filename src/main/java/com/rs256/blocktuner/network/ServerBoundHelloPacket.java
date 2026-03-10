@@ -14,9 +14,9 @@
  *     You should have received a copy of the GNU Lesser General Public License
  *     along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
-package io.github.lumine1909.blocktuner.network;
+package com.rs256.blocktuner.network;
 
-import io.github.lumine1909.blocktuner.BlockTuner;
+import com.rs256.blocktuner.BlockTuner;
 import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.codec.ByteBufCodecs;
@@ -24,10 +24,9 @@ import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
 import net.minecraft.resources.Identifier;
 import net.minecraft.server.level.ServerPlayer;
-import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.NotNullByDefault;
 
-import static io.github.lumine1909.blocktuner.BlockTuner.id;
+import static com.rs256.blocktuner.BlockTuner.id;
 
 @NotNullByDefault
 public record ServerBoundHelloPacket(int protocolVersion) implements CustomPacketPayload {

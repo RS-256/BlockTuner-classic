@@ -16,13 +16,13 @@
  *     along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package io.github.lumine1909.blocktuner;
+package com.rs256.blocktuner;
 
-import io.github.lumine1909.blocktuner.display.TuningScreen;
-import io.github.lumine1909.blocktuner.network.ClientBoundHelloPacket;
-import io.github.lumine1909.blocktuner.network.ServerBoundHelloPacket;
-import io.github.lumine1909.blocktuner.util.InputUtil;
-import io.github.lumine1909.blocktuner.util.MidiManager;
+import com.rs256.blocktuner.display.TuningScreen;
+import com.rs256.blocktuner.network.ClientBoundHelloPacket;
+import com.rs256.blocktuner.network.ServerBoundHelloPacket;
+import com.rs256.blocktuner.util.InputUtil;
+import com.rs256.blocktuner.util.MidiManager;
 import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
@@ -35,7 +35,7 @@ import net.minecraft.world.InteractionResult;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.block.Blocks;
 
-import static io.github.lumine1909.blocktuner.BlockTuner.TUNING_PROTOCOL;
+import static com.rs256.blocktuner.BlockTuner.TUNING_PROTOCOL;
 
 @Environment(EnvType.CLIENT)
 public class BlockTunerClient implements ClientModInitializer {

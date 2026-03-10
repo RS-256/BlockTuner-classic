@@ -7,7 +7,8 @@
   "description": "A mod which helps you tune note blocks.",
   "authors": [
     "xwjcool",
-    "Lumine1909"
+    "Lumine1909",
+    "RS256"
   ],
   "contact": {
     "sources": "https://github.com/Lumine1909/BlockTunerMod_Continue"
@@ -19,10 +20,10 @@
   "environment": "*",
   "entrypoints": {
     "main": [
-      "io.github.lumine1909.blocktuner.BlockTuner"
+      "com.rs256.blocktuner.BlockTuner"
     ],
     "client": [
-      "io.github.lumine1909.blocktuner.BlockTunerClient"
+      "com.rs256.blocktuner.BlockTunerClient"
     ]
   },
   "mixins": [
@@ -31,9 +32,9 @@
   "accessWidener": "blocktuner.accesswidener",
 
   "depends": {
-    "fabricloader": ">=0.14.21",
+    "fabricloader": ">=0.18.4",
     "fabric": "*",
-    "minecraft": ">=1.21.4"
+    "minecraft": "${minecraft}"
   },
   "conflicts": {
     "noteduplicator": "*",

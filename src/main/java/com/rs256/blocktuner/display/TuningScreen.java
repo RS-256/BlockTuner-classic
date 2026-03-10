@@ -16,13 +16,13 @@
  *     along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package io.github.lumine1909.blocktuner.display;
+package com.rs256.blocktuner.display;
 
-import io.github.lumine1909.blocktuner.BlockTuner;
-import io.github.lumine1909.blocktuner.BlockTunerConfig;
-import io.github.lumine1909.blocktuner.network.ServerBoundTuningPacket;
-import io.github.lumine1909.blocktuner.util.MidiManager;
-import io.github.lumine1909.blocktuner.util.NoteNames;
+import com.rs256.blocktuner.BlockTuner;
+import com.rs256.blocktuner.BlockTunerConfig;
+import com.rs256.blocktuner.network.ServerBoundTuningPacket;
+import com.rs256.blocktuner.util.MidiManager;
+import com.rs256.blocktuner.util.NoteNames;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
@@ -48,9 +48,7 @@ import javax.sound.midi.MidiMessage;
 import javax.sound.midi.MidiUnavailableException;
 import javax.sound.midi.Receiver;
 
-import java.util.Objects;
-
-import static io.github.lumine1909.blocktuner.util.InputUtil.DUMMY_EVENT;
+import static com.rs256.blocktuner.util.InputUtil.DUMMY_EVENT;
 
 @NotNullByDefault
 @Environment(EnvType.CLIENT)
