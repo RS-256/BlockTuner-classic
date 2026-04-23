@@ -35,11 +35,15 @@ import net.minecraft.client.input.KeyEvent;
 import net.minecraft.client.input.MouseButtonEvent;
 import net.minecraft.client.renderer.RenderPipelines;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.component.DataComponents;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.Identifier;
 import net.minecraft.util.Mth;
 import net.minecraft.world.InteractionHand;
+import net.minecraft.world.item.BlockItem;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.NoteBlock;
 import org.jetbrains.annotations.NotNullByDefault;
 import org.jetbrains.annotations.Nullable;
 
@@ -216,7 +220,7 @@ public class TuningScreen extends Screen {
             }
             return true;
         } else {
-            if (event.key() == 69) {
+            if (this.minecraft.options.keyInventory.matches(event)) {
                 this.close();
                 return true;
             }
@@ -257,6 +261,27 @@ public class TuningScreen extends Screen {
             BlockTuner.LOGGER.info("[BlockTuner] MIDI device \"{}\" is currently unavailable. Is it busy or unplugged?", currentDevice.getDeviceInfo().getName());
         }
     }
+
+    private static boolean hasNoteBlockState(ItemStack stack) {
+        if (!stack.has(DataComponents.BLOCK_STATE)) {
+            return false;
+        }
+
+        var blockState = stack.get(DataComponents.BLOCK_STATE);
+        if (blockState == null) {
+            return false;
+        }
+
+        return blockState.properties().containsKey("note");
+    }
+
+    public static boolean shouldOpenGui(ItemStack stack) {
+        if (!(stack.getItem() instanceof BlockItem blockItem)) return true;
+        if (!(blockItem.getBlock() instanceof NoteBlock)) return true;
+
+        return !hasNoteBlockState(stack);
+    }
+
 
     static class KeySignature implements Renderable {
 

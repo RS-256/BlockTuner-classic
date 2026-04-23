@@ -25,6 +25,7 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.component.BlockItemStateProperties;
 import net.minecraft.world.level.Level;
@@ -62,7 +63,7 @@ public class ClientNoteBlockMixin extends Block {
     @Override
     public void setPlacedBy(Level level, BlockPos blockPos, BlockState blockState, @Nullable LivingEntity livingEntity, ItemStack itemStack) {
         Minecraft client = Minecraft.getInstance();
-        if (livingEntity != null && livingEntity.equals(client.player) && InputUtil.hasControlDown()) {
+        if (livingEntity != null && livingEntity.equals(client.player) && InputUtil.hasControlDown() && TuningScreen.shouldOpenGui(itemStack)) {
             client.execute(() -> client.setScreen(new TuningScreen(Component.empty(), blockPos)));
         }
         super.setPlacedBy(level, blockPos, blockState, livingEntity, itemStack);
