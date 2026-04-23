@@ -2,7 +2,7 @@
   "required": true,
   "minVersion": "0.8",
   "package": "com.rs256.blocktuner.mixin",
-  "refmap": "blocktuner-fabric-refmap.json",
+  "refmap": "blocktuner-refmap.json",
   "compatibilityLevel": "JAVA_21",
   "mixins": [
     "NoteBlockMixin",
@@ -12,8 +12,7 @@
     "ClientNoteBlockMixin",
     "CommandSuggestionsMixin",
     "GuiMixin",
-    "NoteNameMixin",
-    "SoundEngineMixin"
+    "NoteNameMixin"
   ],
   "injectors": {
     "defaultRequire": 1
