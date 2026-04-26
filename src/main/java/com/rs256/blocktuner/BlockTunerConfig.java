@@ -55,7 +55,6 @@ public class BlockTunerConfig {
             } catch (IOException e) {
                 e.printStackTrace();
             }
-
         }
 
         try (OutputStream outputStream = Files.newOutputStream(CONFIG_PATH)) {

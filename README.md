@@ -1,22 +1,29 @@
-# BlockTuner (Fabric Mod)
+# BlockTuner Classic
 
 ## About
 
-This is the fabric version of BlockTuner *and* requires fabric API.
+BlockTuner Classic is a Fabric fork of the original [BlockTuner](https://github.com/xwjcool123/BlockTunerMod).
 
-If you are using forge, you can check out the [forge version](https://github.com/APeng215/BlockTuner-forge) by A_Peng215.
+This fork keeps the original note block tuning workflow, but is being developed as its own branch with different configuration and maintenance decisions.
 
-If you want the data pack for older versions of Minecraft, please visit [this page](https://github.com/xwjcool123/blocktuner).
+If you are looking for the original project, the upstream repositories are:
+
+- Fabric mod: [xwjcool123/BlockTunerMod](https://github.com/xwjcool123/BlockTunerMod)
+- Datapack for older versions: [xwjcool123/blocktuner](https://github.com/xwjcool123/blocktuner)
+- Forge port: [APeng215/BlockTuner-forge](https://github.com/APeng215/BlockTuner-forge)
 
 ## Instructions
 
 ### Installation
 
-Put this mod in your `mods` folder. You also need to install [Fabric API](https://modrinth.com/mod/fabric-api) if you haven't installed it yet.
+Put this mod in your `mods` folder.
+
+This fork requires the following dependency mods:
+
+- [Fabric API](https://modrinth.com/mod/fabric-api)
+- [YetAnotherConfigLib (YACL)](https://modrinth.com/mod/yacl)
 
 This mod also works on servers and require no client installation.
-
-You can get the latest version [here](https://github.com/xwjcool123/BlockTunerMod/releases/latest) or find a specific release [here](https://github.com/xwjcool123/BlockTunerMod/releases)
 
 ### How to Use BlockTuner
 
@@ -47,6 +54,9 @@ Top-right corner (from left to right)
 ### Localization
 * Russian - [Felix14-v2](https://github.com/Felix14-v2) (Currently outdated)
 * Japanese - [misaka10843](https://github.com/misaka10843) & [hakkaku](https://note.com/hakukak/)
+
+### Original Project
+* [xwjcool123/BlockTunerMod](https://github.com/xwjcool123/BlockTunerMod)
 
 ### Forge Port
 * [A_Peng215](https://github.com/APeng215)
