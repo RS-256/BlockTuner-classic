@@ -4,11 +4,16 @@
   "package": "com.rs256.blocktuner.mixin",
   "refmap": "${refmap}",
   "compatibilityLevel": "${java}",
-  "mixins": [
-    "NoteBlockMixin",
-    "PlaySoundCommandMixin"
+  "client": [
+    "ClientNoteBlockMixin",
+    "CommandSuggestionsMixin",
+    "GuiMixin",
+    "NoteNameMixin"
   ],
   "injectors": {
     "defaultRequire": 1
+  },
+  "overwrites": {
+    "requireAnnotations": true
   }
 }

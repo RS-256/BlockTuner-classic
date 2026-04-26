@@ -1,20 +1,12 @@
 plugins {
     id("dev.kikugie.stonecutter")
+    id("net.fabricmc.fabric-loom") version "1.15-SNAPSHOT" apply false
     id("net.fabricmc.fabric-loom-remap") version "1.15-SNAPSHOT" apply false
-    // id("me.modmuss50.mod-publish-plugin") version "1.0.+" apply false
+    // id("me.modmuss50.mod-publish-plugin") version "1.1.0" apply false
 }
 
 stonecutter active "1.21.11"
 
-/*
-// Make newer versions be published last
-stonecutter tasks {
-    order("publishModrinth")
-    order("publishCurseforge")
-}
- */
-
-// See https://stonecutter.kikugie.dev/wiki/config/params
 stonecutter parameters {
     swaps["mod_version"] = "\"${property("mod.version")}\";"
     swaps["minecraft"] = "\"${node.metadata.version}\";"
@@ -24,13 +16,13 @@ stonecutter parameters {
 
 tasks.register("runClientCurrentVersion") {
     group = "run"
-    description = "Runs :<current>:runClient only."
+    description = "Runs the client for the active stonecutter version."
     dependsOn(project(":${sc.current?.version}").tasks.named("runClient"))
 }
 
 tasks.register("runServerCurrentVersion") {
     group = "run"
-    description = "Runs :<current>:runServer only."
+    description = "Runs the server for the active stonecutter version."
     dependsOn(project(":${sc.current?.version}").tasks.named("runServer"))
 }
 
@@ -38,8 +30,8 @@ val releaseVersions = listOf(
     "1.21.11"
 )
 
-tasks.register("buildReleaseRemap") {
+tasks.register("buildReleaseRemapped") {
     group = "build"
-    description = "Build remapped jars only for release representative versions."
-    dependsOn(releaseVersions.map { v -> ":$v:buildAndCollectRemap" })
+    description = "Build remapped jars only for the release versions."
+    dependsOn(releaseVersions.map { v -> ":$v:buildAndCollectRemapped" })
 }

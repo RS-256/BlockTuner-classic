@@ -1,0 +1,18 @@
+# Mod metadata - shared across all versions
+mod.id = "blocktuner"
+mod.name = "BlockTuner Classic"
+mod.version = "1.5.1-classic"
+mod.group = "com.rs256"
+
+deps.fabric_loader = "0.18.4"
+build.fabric_loader = ">=0.18.4"
+build.fabric_api = "*"
+
+publish.modrinth = ""
+publish.curseforge = ""
+
+["1.21.11"]
+deps.fabric_api = "0.141.3+1.21.11"
+mod.mc_dep = ">=1.21.10 <=1.21.11"
+mod.mc_title = "1.21.11"
+mod.mc_targets = "1.21.10 1.21.11"

@@ -1,9 +1,9 @@
 {
   "schemaVersion": 1,
-  "id": "blocktuner",
+  "id": "${id}",
   "version": "${version}",
 
-  "name": "BlockTuner",
+  "name": "${name}",
   "description": "A mod which helps you tune note blocks.",
   "authors": [
     "xwjcool",
@@ -27,13 +27,17 @@
     ]
   },
   "mixins": [
-    "blocktuner.mixins.json"
+    "blocktuner.mixins.json",
+    {
+      "config": "blocktunerClient.mixins.json",
+      "environment": "client"
+    }
   ],
-  "accessWidener": "blocktuner.accesswidener",
+  "accessWidener": "${accesswidener}",
 
   "depends": {
-    "fabricloader": ">=0.18.4",
-    "fabric": "*",
+    "fabricloader": "${fabricLoader}",
+    "${fabricApiKey}": "${fabricAPI}",
     "minecraft": "${minecraft}"
   },
   "conflicts": {
