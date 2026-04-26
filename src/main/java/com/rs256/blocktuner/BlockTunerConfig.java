@@ -37,11 +37,13 @@ public class BlockTunerConfig {
     private static final String KEY_TO_PIANO = "key-to-piano";
     private static final String MIDI_DEVICE = "midi-device";
     private static final String KEY_SIGNATURE = "key-signature";
+    private static final String REQUIRE_CTRL_TO_OPEN_GUI = "require-ctrl-to-open-gui";
     public static int keySignature = 0;
     public static boolean onBlockTunerServer = false;
     private static String midiDeviceName = "";
     private static boolean keyToPiano = false;
     private static boolean playMode = false;
+    private static boolean requireCtrlToOpenGui = true;
 
     public static void save() {
 
@@ -70,6 +72,7 @@ public class BlockTunerConfig {
             playMode = Boolean.parseBoolean(properties.getProperty(PLAY_MODE));
             keyToPiano = Boolean.parseBoolean(properties.getProperty(KEY_TO_PIANO));
             midiDeviceName = properties.getProperty(MIDI_DEVICE, "");
+            requireCtrlToOpenGui = Boolean.parseBoolean(properties.getProperty(REQUIRE_CTRL_TO_OPEN_GUI, "true"));
             try {
                 keySignature = Integer.parseInt(properties.getProperty(KEY_SIGNATURE, "0"));
             } catch (NumberFormatException e) {
@@ -95,22 +98,39 @@ public class BlockTunerConfig {
         return playMode;
     }
 
-    public static void togglePlayMode() {
-        playMode = !playMode;
+    public static void setPlayMode(boolean playMode) {
+        BlockTunerConfig.playMode = playMode;
         properties.setProperty(PLAY_MODE, String.valueOf(playMode));
+    }
+
+    public static void togglePlayMode() {
+        setPlayMode(!playMode);
     }
 
     public static boolean isKeyToPiano() {
         return keyToPiano;
     }
 
-    public static void toggleKeyToPiano() {
-        keyToPiano = !keyToPiano;
+    public static void setKeyToPiano(boolean keyToPiano) {
+        BlockTunerConfig.keyToPiano = keyToPiano;
         properties.setProperty(KEY_TO_PIANO, String.valueOf(keyToPiano));
+    }
+
+    public static void toggleKeyToPiano() {
+        setKeyToPiano(!keyToPiano);
     }
 
     public static int getKeySignature() {
         return keySignature;
+    }
+
+    public static boolean isRequireCtrlToOpenGui() {
+        return requireCtrlToOpenGui;
+    }
+
+    public static void setRequireCtrlToOpenGui(boolean requireCtrlToOpenGui) {
+        BlockTunerConfig.requireCtrlToOpenGui = requireCtrlToOpenGui;
+        properties.setProperty(REQUIRE_CTRL_TO_OPEN_GUI, String.valueOf(requireCtrlToOpenGui));
     }
 
     public static void setKeySignature(int keySignature) {

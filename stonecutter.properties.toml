@@ -5,6 +5,8 @@ mod.version = "1.5.1-classic"
 mod.group = "com.rs256"
 
 deps.fabric_loader = "0.18.4"
+deps.modmenu = "17.0.0"
+deps.yacl = "3.8.2+1.21.11-fabric"
 build.fabric_loader = ">=0.18.4"
 build.fabric_api = "*"
 

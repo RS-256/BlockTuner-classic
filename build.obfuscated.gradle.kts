@@ -20,8 +20,12 @@ repositories {
         filter { groups.forEach(::includeGroup) }
     }
 
+    mavenCentral()
     strictMaven("https://www.cursemaven.com", "CurseForge", "curse.maven")
     strictMaven("https://api.modrinth.com/maven", "Modrinth", "maven.modrinth")
+    strictMaven("https://maven.terraformersmc.com", "Terraformers", "com.terraformersmc")
+    strictMaven("https://maven.isxander.dev/releases", "Xander Maven", "dev.isxander")
+    strictMaven("https://maven.quiltmc.org/repository/release", "Quilt", "org.quiltmc.parsers")
 }
 
 dependencies {
@@ -35,6 +39,16 @@ dependencies {
     mappings(loom.officialMojangMappings())
     modImplementation("net.fabricmc:fabric-loader:${property("deps.fabric_loader")}")
     modImplementation("net.fabricmc.fabric-api:fabric-api:${property("deps.fabric_api")}")
+    modImplementation("com.terraformersmc:modmenu:${property("deps.modmenu")}")
+    modImplementation("maven.modrinth:yacl:${property("deps.yacl")}")
+    implementation("org.quiltmc.parsers:gson:0.2.1")
+    implementation("org.quiltmc.parsers:json:0.2.1")
+    implementation("com.twelvemonkeys.common:common-lang:3.12.0")
+    implementation("com.twelvemonkeys.common:common-io:3.12.0")
+    implementation("com.twelvemonkeys.common:common-image:3.12.0")
+    implementation("com.twelvemonkeys.imageio:imageio-core:3.12.0")
+    implementation("com.twelvemonkeys.imageio:imageio-metadata:3.12.0")
+    implementation("com.twelvemonkeys.imageio:imageio-webp:3.12.0")
 
     fapi("fabric-lifecycle-events-v1", "fabric-resource-loader-v0", "fabric-content-registries-v0")
 }

@@ -18,6 +18,7 @@
 
 package com.rs256.blocktuner.mixin;
 
+import com.rs256.blocktuner.BlockTunerConfig;
 import com.rs256.blocktuner.display.TuningScreen;
 import com.rs256.blocktuner.util.InputUtil;
 import net.minecraft.client.Minecraft;
@@ -63,7 +64,8 @@ public class ClientNoteBlockMixin extends Block {
     @Override
     public void setPlacedBy(Level level, BlockPos blockPos, BlockState blockState, @Nullable LivingEntity livingEntity, ItemStack itemStack) {
         Minecraft client = Minecraft.getInstance();
-        if (livingEntity != null && livingEntity.equals(client.player) && InputUtil.isCtrlDown() && TuningScreen.shouldOpenGui(itemStack)) {
+        boolean openGuiModifierSatisfied = !BlockTunerConfig.isRequireCtrlToOpenGui() || InputUtil.isCtrlDown();
+        if (livingEntity != null && livingEntity.equals(client.player) && openGuiModifierSatisfied && TuningScreen.shouldOpenGui(itemStack)) {
             client.execute(() -> client.setScreen(new TuningScreen(Component.empty(), blockPos)));
         }
         super.setPlacedBy(level, blockPos, blockState, livingEntity, itemStack);

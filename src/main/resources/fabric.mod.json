@@ -24,6 +24,9 @@
     ],
     "client": [
       "com.rs256.blocktuner.BlockTunerClient"
+    ],
+    "modmenu": [
+      "com.rs256.blocktuner.config.BlockTunerModMenuIntegration"
     ]
   },
   "mixins": [
@@ -38,7 +41,8 @@
   "depends": {
     "fabricloader": "${fabricLoader}",
     "${fabricApiKey}": "${fabricAPI}",
-    "minecraft": "${minecraft}"
+    "minecraft": "${minecraft}",
+    "yet_another_config_lib_v3": ">=3.8.2"
   },
   "conflicts": {
     "noteduplicator": "*",

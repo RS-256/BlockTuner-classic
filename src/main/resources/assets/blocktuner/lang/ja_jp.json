@@ -8,5 +8,18 @@
   "settings.blocktuner.midi_device": "MIDIデバイス：%s",
   "settings.blocktuner.refresh": "MIDIデバイスリストを更新する",
 
+  "yacl.blocktuner.title": "BlockTuner 設定",
+  "yacl.blocktuner.category.general": "一般",
+  "yacl.blocktuner.group.general": "現在の設定",
+  "yacl.blocktuner.group.general.description": "従来の properties ベース設定から移行するための暫定 YACL 画面です。",
+  "yacl.blocktuner.option.play_mode": "演奏モード",
+  "yacl.blocktuner.option.play_mode.description": "BlockTuner の演奏モード状態を切り替えます。",
+  "yacl.blocktuner.option.key_to_piano": "キーボードをピアノ入力にする",
+  "yacl.blocktuner.option.key_to_piano.description": "通常のキーボード入力を音楽キーボードとして扱います。",
+  "yacl.blocktuner.option.key_signature": "調号",
+  "yacl.blocktuner.option.key_signature.description": "-7 から 7 までの調号値を変更します。",
+  "yacl.blocktuner.option.require_ctrl_to_open_gui": "GUIを開くのにCtrlを要求する",
+  "yacl.blocktuner.option.require_ctrl_to_open_gui.description": "オンの場合、音ブロック設置時のチューニングGUIは Ctrl を押しているときだけ開きます。",
+
   "midi_device.empty": "(無し)"
 }

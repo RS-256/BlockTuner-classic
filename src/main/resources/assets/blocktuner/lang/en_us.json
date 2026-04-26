@@ -8,5 +8,18 @@
   "settings.blocktuner.midi_device": "MIDI device: %s",
   "settings.blocktuner.refresh": "Refresh MIDI device list",
 
+  "yacl.blocktuner.title": "BlockTuner Configuration",
+  "yacl.blocktuner.category.general": "General",
+  "yacl.blocktuner.group.general": "Current Settings",
+  "yacl.blocktuner.group.general.description": "Temporary YACL screen used while migrating the old properties-based config.",
+  "yacl.blocktuner.option.play_mode": "Play mode",
+  "yacl.blocktuner.option.play_mode.description": "Toggles BlockTuner's play mode state.",
+  "yacl.blocktuner.option.key_to_piano": "Keyboard to piano",
+  "yacl.blocktuner.option.key_to_piano.description": "Uses the typing keyboard as a musical keyboard.",
+  "yacl.blocktuner.option.key_signature": "Key signature",
+  "yacl.blocktuner.option.key_signature.description": "Changes the key signature value from -7 to 7.",
+  "yacl.blocktuner.option.require_ctrl_to_open_gui": "Require Ctrl to open GUI",
+  "yacl.blocktuner.option.require_ctrl_to_open_gui.description": "When enabled, placing a note block only opens the tuning GUI while Ctrl is held.",
+
   "midi_device.empty": "(None)"
 }
