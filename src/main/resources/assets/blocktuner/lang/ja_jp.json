@@ -10,8 +10,8 @@
 
   "yacl.blocktuner.title": "BlockTuner 設定",
   "yacl.blocktuner.category.general": "一般",
-  "yacl.blocktuner.group.general": "現在の設定",
-  "yacl.blocktuner.group.general.description": "従来の properties ベース設定から移行するための暫定 YACL 画面です。",
+  "yacl.blocktuner.group.general": "チューニング操作",
+  "yacl.blocktuner.group.general.description": "チューニング GUI の開き方や、音ブロック操作時のショートカット挙動を設定します。",
   "yacl.blocktuner.option.play_mode": "演奏モード",
   "yacl.blocktuner.option.play_mode.description": "BlockTuner の演奏モード状態を切り替えます。",
   "yacl.blocktuner.option.key_to_piano": "キーボードをピアノ入力にする",

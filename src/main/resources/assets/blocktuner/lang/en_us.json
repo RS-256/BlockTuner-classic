@@ -10,8 +10,8 @@
 
   "yacl.blocktuner.title": "BlockTuner Configuration",
   "yacl.blocktuner.category.general": "General",
-  "yacl.blocktuner.group.general": "Current Settings",
-  "yacl.blocktuner.group.general.description": "Temporary YACL screen used while migrating the old properties-based config.",
+  "yacl.blocktuner.group.general": "Tuning Controls",
+  "yacl.blocktuner.group.general.description": "Configure how BlockTuner opens its tuning GUI and handles note block interaction shortcuts.",
   "yacl.blocktuner.option.play_mode": "Play mode",
   "yacl.blocktuner.option.play_mode.description": "Toggles BlockTuner's play mode state.",
   "yacl.blocktuner.option.key_to_piano": "Keyboard to piano",
