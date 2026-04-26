@@ -38,12 +38,14 @@ public class BlockTunerConfig {
     private static final String MIDI_DEVICE = "midi-device";
     private static final String KEY_SIGNATURE = "key-signature";
     private static final String REQUIRE_CTRL_TO_OPEN_GUI = "require-ctrl-to-open-gui";
+    private static final String REQUIRE_CTRL_TO_COPY_PITCH = "require-ctrl-to-copy-pitch";
     public static int keySignature = 0;
     public static boolean onBlockTunerServer = false;
     private static String midiDeviceName = "";
     private static boolean keyToPiano = false;
     private static boolean playMode = false;
     private static boolean requireCtrlToOpenGui = true;
+    private static boolean requireCtrlToCopyPitch = true;
 
     public static void save() {
 
@@ -73,6 +75,7 @@ public class BlockTunerConfig {
             keyToPiano = Boolean.parseBoolean(properties.getProperty(KEY_TO_PIANO));
             midiDeviceName = properties.getProperty(MIDI_DEVICE, "");
             requireCtrlToOpenGui = Boolean.parseBoolean(properties.getProperty(REQUIRE_CTRL_TO_OPEN_GUI, "true"));
+            requireCtrlToCopyPitch = Boolean.parseBoolean(properties.getProperty(REQUIRE_CTRL_TO_COPY_PITCH, "true"));
             try {
                 keySignature = Integer.parseInt(properties.getProperty(KEY_SIGNATURE, "0"));
             } catch (NumberFormatException e) {
@@ -131,6 +134,15 @@ public class BlockTunerConfig {
     public static void setRequireCtrlToOpenGui(boolean requireCtrlToOpenGui) {
         BlockTunerConfig.requireCtrlToOpenGui = requireCtrlToOpenGui;
         properties.setProperty(REQUIRE_CTRL_TO_OPEN_GUI, String.valueOf(requireCtrlToOpenGui));
+    }
+
+    public static boolean isRequireCtrlToCopyPitch() {
+        return requireCtrlToCopyPitch;
+    }
+
+    public static void setRequireCtrlToCopyPitch(boolean requireCtrlToCopyPitch) {
+        BlockTunerConfig.requireCtrlToCopyPitch = requireCtrlToCopyPitch;
+        properties.setProperty(REQUIRE_CTRL_TO_COPY_PITCH, String.valueOf(requireCtrlToCopyPitch));
     }
 
     public static void setKeySignature(int keySignature) {

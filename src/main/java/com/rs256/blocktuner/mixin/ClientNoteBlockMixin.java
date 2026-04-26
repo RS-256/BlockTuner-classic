@@ -55,7 +55,7 @@ public class ClientNoteBlockMixin extends Block {
     @Override
     protected ItemStack getCloneItemStack(LevelReader levelReader, BlockPos blockPos, BlockState blockState, boolean bl) {
         ItemStack stack = super.getCloneItemStack(levelReader, blockPos, blockState, bl);
-        if (InputUtil.isCtrlDown()) {
+        if (!BlockTunerConfig.isRequireCtrlToCopyPitch() || InputUtil.isCtrlDown()) {
             copyBlockState(blockState, stack);
         }
         return stack;

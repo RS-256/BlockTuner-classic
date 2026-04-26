@@ -20,6 +20,8 @@
   "yacl.blocktuner.option.key_signature.description": "Changes the key signature value from -7 to 7.",
   "yacl.blocktuner.option.require_ctrl_to_open_gui": "Require Ctrl to open GUI",
   "yacl.blocktuner.option.require_ctrl_to_open_gui.description": "When enabled, placing a note block only opens the tuning GUI while Ctrl is held.",
+  "yacl.blocktuner.option.require_ctrl_to_copy_pitch": "Require Ctrl to copy pitch",
+  "yacl.blocktuner.option.require_ctrl_to_copy_pitch.description": "When enabled, pick block only copies the note block pitch while Ctrl is held.",
 
   "midi_device.empty": "(None)"
 }

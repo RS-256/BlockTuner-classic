@@ -20,6 +20,8 @@
   "yacl.blocktuner.option.key_signature.description": "-7 から 7 までの調号値を変更します。",
   "yacl.blocktuner.option.require_ctrl_to_open_gui": "GUIを開くのにCtrlを要求する",
   "yacl.blocktuner.option.require_ctrl_to_open_gui.description": "オンの場合、音ブロック設置時のチューニングGUIは Ctrl を押しているときだけ開きます。",
+  "yacl.blocktuner.option.require_ctrl_to_copy_pitch": "音階コピーにCtrlを要求する",
+  "yacl.blocktuner.option.require_ctrl_to_copy_pitch.description": "オンの場合、ピックブロックで音ブロックの音階をコピーするのは Ctrl を押しているときだけです。",
 
   "midi_device.empty": "(無し)"
 }
