@@ -54,7 +54,7 @@ public class ClientNoteBlockMixin extends Block {
     @Override
     protected ItemStack getCloneItemStack(LevelReader levelReader, BlockPos blockPos, BlockState blockState, boolean bl) {
         ItemStack stack = super.getCloneItemStack(levelReader, blockPos, blockState, bl);
-        if (InputUtil.hasControlDown()) {
+        if (InputUtil.isCtrlDown()) {
             copyBlockState(blockState, stack);
         }
         return stack;
@@ -63,7 +63,7 @@ public class ClientNoteBlockMixin extends Block {
     @Override
     public void setPlacedBy(Level level, BlockPos blockPos, BlockState blockState, @Nullable LivingEntity livingEntity, ItemStack itemStack) {
         Minecraft client = Minecraft.getInstance();
-        if (livingEntity != null && livingEntity.equals(client.player) && InputUtil.hasControlDown() && TuningScreen.shouldOpenGui(itemStack)) {
+        if (livingEntity != null && livingEntity.equals(client.player) && InputUtil.isCtrlDown() && TuningScreen.shouldOpenGui(itemStack)) {
             client.execute(() -> client.setScreen(new TuningScreen(Component.empty(), blockPos)));
         }
         super.setPlacedBy(level, blockPos, blockState, livingEntity, itemStack);

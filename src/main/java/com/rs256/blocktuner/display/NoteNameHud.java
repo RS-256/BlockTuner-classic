@@ -35,7 +35,7 @@ public class NoteNameHud {
         Minecraft client = Minecraft.getInstance();
         assert client.level != null;
         assert client.player != null;
-        if (InputUtil.hasControlDown() && !client.player.isSpectator()) {
+        if (InputUtil.isCtrlDown() && !client.player.isSpectator()) {
             HitResult hitResult = client.hitResult;
             if (hitResult != null && hitResult.getType() == HitResult.Type.BLOCK) {
                 BlockPos blockPos = ((BlockHitResult) hitResult).getBlockPos();

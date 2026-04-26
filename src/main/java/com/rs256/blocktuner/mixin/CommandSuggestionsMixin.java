@@ -46,9 +46,9 @@ public abstract class CommandSuggestionsMixin {
         )
     )
     private void injected(CallbackInfo ci, @Local LocalRef<Suggestion> suggestion) {
-        if (InputUtil.hasControlDown()) {
+        if (InputUtil.isCtrlDown()) {
             if (this.tabCycles) {
-                this.cycle(InputUtil.hasShiftDown() ? 1 : -1);
+                this.cycle(InputUtil.isShiftDown() ? 1 : -1);
                 suggestion.set(suggestionList.get(this.current));
             }
             field_21615.keepSuggestions = false;
