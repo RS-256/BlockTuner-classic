@@ -1,12 +1,10 @@
 # Mod metadata - shared across all versions
 mod.id = "blocktuner"
-mod.name = "BlockTuner Classic"
-mod.version = "1.5.1-classic"
+mod.name = "BlockTuner pitchsmith"
+mod.version = "2.1.0-pitchsmith"
 mod.group = "com.rs256"
 
 deps.fabric_loader = "0.18.4"
-deps.modmenu = "17.0.0"
-deps.yacl = "3.8.2+1.21.11-fabric"
 build.fabric_loader = ">=0.18.4"
 build.fabric_api = "*"
 
@@ -15,6 +13,8 @@ publish.curseforge = ""
 
 ["1.21.11"]
 deps.fabric_api = "0.141.3+1.21.11"
+deps.yacl = "3.8.2+1.21.11-fabric"
+deps.modmenu = "17.0.0"
 mod.mc_dep = ">=1.21.10 <=1.21.11"
 mod.mc_title = "1.21.11"
 mod.mc_targets = "1.21.10 1.21.11"
