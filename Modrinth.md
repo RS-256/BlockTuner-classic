@@ -14,26 +14,6 @@ This branch keeps the familiar tuning workflow, but focuses on a setup that is m
 - Prevented the tuning GUI from opening when placing tagged note blocks
 - Updated build, Stonecutter, Gradle, and Loom setup for ongoing maintenance
 
-## RS256 Commit Summary
-
-This release mainly follows the recent `RS256` work on the fork:
-
-- `491645a` clarified that this fork predates the upstream GPL relicensing and has not synced later upstream GPL commits
-- `720ba27` renamed the project from `classic` to `pitchsmith`
-- `a890d51` added `Modrinth.md` and refreshed repository-facing documentation
-- `424afb9` rewrote configuration text in English and Japanese
-- `c7d8b29` introduced `require-ctrl-to-copy-pitch`
-- `82b230c` added YACL-powered configuration and Mod Menu integration
-- `386f5cd` reworked `InputUtil` and related input checks
-- `45435ad` migrated the project template and reorganized build/mixin/access widener structure
-- `1dbb9e1` updated Gradle and Loom
-- `0518ba9` stopped the tuning GUI from opening when placing tagged note blocks
-- `56bbf2d` removed a mixin that should live in a separate mod
-- `6e79511` fixed a refmap typo
-- `b92d49f` adjusted the Ctrl requirement behavior for opening the GUI
-- `c580363` prepared the `1.21.11` Stonecutter target
-- `0ae92ec` moved the project onto the new Stonecutter template and `rs256` package/build naming
-
 ## Required Dependencies
 
 - [Fabric API](https://modrinth.com/mod/fabric-api)
